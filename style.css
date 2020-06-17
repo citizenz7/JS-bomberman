@@ -6,7 +6,9 @@
   position: relative;
 }
 #pion{
-  background-color: yellow;
+  /*background-color: yellow;*/
+  background-image: url("op.jpg");
+  background-size: contain;
   width: 40px;
   height: 40px;
   position: absolute;
