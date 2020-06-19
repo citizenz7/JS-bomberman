@@ -1,19 +1,30 @@
-#cadre{
-  width: 800px;
-  height: 800px;
+body{
+  background-color: grey;
+}
+
+#plateau{
+  background-color: white;
   margin: auto;
-  /*background-color: #000;*/
-  background-image:  url("back1.jpg");
-  background-size: cover;
   position: relative;
+
 }
 #pion{
-  /*background-color: yellow;*/
-  background-image: url("op.jpg");
+  width: 40px;
+  height: 40px;
+  /*background-color: blue;
+  border-style: double;
+  border-color: grey;
+  border-width: 1px;*/
+  background-image: url("tux-batman.png");
   background-size: contain;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+}
+
+#vilain{
   width: 40px;
   height: 40px;
   position: absolute;
-  top: 0;
-  left: 0;
+  background-color: black;
 }

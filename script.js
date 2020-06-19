@@ -1,48 +1,103 @@
-/*
-arrowLeft = 37; arrowRight = 39; arrowtop = 38; arrowDown = 40;
-*/
-let cadre = document.querySelector('#cadre'); 	// variables objet
-let pion = document.querySelector('#pion');
-let x; let y;
+const H_GRID = 24;
+const V_GRID = 16;
+const GRID_SIZE = 40;
 
-	// programmation des touches de direction
-	document.onkeydown = function(event)
-	{
-		if (event.keyCode == 37) gauche();
-		if (event.keyCode == 39) droite() ;
-		if (event.keyCode == 38) haut();
-		if (event.keyCode == 40) bas() ;
-	} // fin fonction
+const WINDOW_WIDTH = H_GRID * GRID_SIZE;
+const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
-	// quatre fonctions de déplacement
-	function gauche()
-	{
-		x = getComputedStyle(pion).left;
-		x = parseInt(x); x= x-20;
-		x = x + "px";
-		pion.style.left = x ;
-	}
+var plateau = document.getElementById('plateau');
+plateau.style.width = WINDOW_WIDTH;
+plateau.style.height = WINDOW_HEIGHT;
 
-	function droite() {
-		x = getComputedStyle(pion).left;
-		x = parseInt(x);
-		x= x+20;
-		x = x+"px";
-		pion.style.left = x ;
-	}
+var pion = document.getElementById('pion'),
+  stylePion = pion.style,
+  x = pion.offsetLeft,
+  y = pion.offsetTop;
 
-	function haut() {
-		y = getComputedStyle(pion).top;
-		y = parseInt(y);
-		y= y-20;
-		y = y+"px";
-		pion.style.top = y ;
-	}
-	
-	function bas()  {
-		y = getComputedStyle(pion).top;
-		y = parseInt(y);
-		y= y+20;
-		y = y+"px";
-		pion.style.top = y ;
-	}
+
+var blockGrid = [];
+for (var i = 0; i < H_GRID; i++) {
+  blockGrid.push([]);
+  for (var j = 0; j < V_GRID; j++) {
+    let block = document.createElement("div");
+    block.style.width = "40px";
+    block.style.height = "40px";
+    block.style.display = "flex";
+    block.style.position = "absolute";
+
+    if (random100() > 80) {
+      /*block.style.backgroundColor = "black";*/
+      block.style.backgroundImage = 'url("pillar2.png")';
+      block.traverser = false;
+
+    } else if (random100() > 70) {
+      /*block.style.backgroundColor = "black";*/
+      block.style.backgroundImage = 'url("bois.jpg")';
+      block.traverser = false;
+    }
+
+    else if (random100() > 97){
+      //block.style.backgroundColor = "black";
+      //block.style.backgroundImage = 'url("win2.png")';
+      //block.traverser = true;
+      const getRandom = (min, max) => Math.floor(Math.random()*(max-min+1)+min);
+      const vilain= document.querySelector('#vilain');
+      setInterval(() => {
+          vilain.style.left= getRandom(0, 300 - 200)+'px'; // Horizontally
+          vilain.style.top = getRandom(0, 300 - 200)+'px'; // Vertically
+      }, 900); // every 1/2 second
+
+    }
+
+    else {
+      /*block.style.backgroundColor = "green";*/
+      block.style.backgroundImage = 'url("grass2.png")';
+      block.traverser = true;
+    }
+
+    block.style.marginLeft = (i * GRID_SIZE).toString() + "px";
+    block.style.marginTop = (j * GRID_SIZE).toString() + "px";
+
+    document.getElementById("plateau").appendChild(block);
+    blockGrid[i].push(block);
+  }
+}
+
+//blockGrid[10][10].style.backgroundColor = "blue";
+
+document.onkeydown = function(event) {
+  var event = event || window.event,
+    keyCode = event.keyCode;
+  switch (keyCode) {
+    // Up
+    case 38:
+      if (y > 0 && blockGrid[x][y - 1].traverser)
+        y--; // ou y-=40;
+      break;
+      // Right
+    case 39:
+      if (x < H_GRID - 1 && blockGrid[x + 1][y].traverser)
+        x++;
+      break;
+      // Down
+    case 40:
+      if (y < H_GRID - 1 && blockGrid[x][y + 1].traverser)
+        y++;
+      break;
+      // Left
+    case 37:
+      if (x > 0 && blockGrid[x - 1][y].traverser)
+        x--;
+      break;
+  }
+  stylePion.left = String(x * GRID_SIZE) + 'px';
+  stylePion.top = String(y * GRID_SIZE) + 'px';
+}
+
+function randomColor() {
+  return "#" + ((1 << 24) * Math.random() | 0).toString(16);
+}
+
+function random100() {
+  return Math.floor(Math.random() * 100);
+}
