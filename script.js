@@ -14,8 +14,10 @@ var pion = document.getElementById('pion'),
   x = pion.offsetLeft,
   y = pion.offsetTop;
 
-
+// tableau
 var blockGrid = [];
+// le x c'est le i, et le j c'est le y
+// le j n'apparait pas car c'est juste pour créer des tableaux
 for (var i = 0; i < H_GRID; i++) {
   blockGrid.push([]);
   for (var j = 0; j < V_GRID; j++) {
@@ -25,7 +27,7 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.display = "flex";
     block.style.position = "absolute";
 
-    if (random100() > 80) {
+    if (random100() > 75) {
       /*block.style.backgroundColor = "black";*/
       block.style.backgroundImage = 'url("pillar2.png")';
       block.traverser = false;
@@ -45,7 +47,7 @@ for (var i = 0; i < H_GRID; i++) {
       setInterval(() => {
           vilain.style.left= getRandom(0, 300 - 200)+'px'; // Horizontally
           vilain.style.top = getRandom(0, 300 - 200)+'px'; // Vertically
-      }, 900); // every 1/2 second
+      }, 1500); // every 1/2 second
 
     }
 
@@ -63,7 +65,18 @@ for (var i = 0; i < H_GRID; i++) {
   }
 }
 
-//blockGrid[10][10].style.backgroundColor = "blue";
+// on met rien en position 0,1
+blockGrid[0][0].style.backgroundImage = 'url("grass2.png")';
+blockGrid[0][0].traverser = true;
+blockGrid[1][0].style.backgroundImage = 'url("grass2.png")';
+blockGrid[1][0].traverser = true;
+blockGrid[0][1].style.backgroundImage = 'url("grass2.png")';
+blockGrid[0][1].traverser = true;
+blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("grass2.png")';
+blockGrid[H_GRID - 1][1].traverser = true;
+
+// coffre au milieu
+blockGrid[11][7].style.backgroundImage = 'url("windows.png")';
 
 document.onkeydown = function(event) {
   var event = event || window.event,
