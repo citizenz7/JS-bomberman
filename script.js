@@ -14,6 +14,12 @@ var pion = document.getElementById('pion'),
   x = pion.offsetLeft,
   y = pion.offsetTop;
 
+  var vilain = document.getElementById('vilain'),
+    styleVilain = vilain.style,
+    vilainX = vilain.offsetLeft,
+    vilainY = vilain.offsetTop,
+    direction = "right";
+
 // tableau
 var blockGrid = [];
 // le x c'est le i, et le j c'est le y
@@ -60,7 +66,6 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
     }
 
-
     else if (random100() > 97) {
       block.style.backgroundImage = 'url("windows.png")';
       block.style.backgroundSize = 'contain';
@@ -69,6 +74,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
 
       // move div randomly
+      /*
       window.onload = function() {
         var max_width = window.innerWidth;
         var max_height = window.innerHeight;
@@ -147,7 +153,7 @@ for (var i = 0; i < H_GRID; i++) {
           }
         }
       }
-
+      */
     }
 
     else {
@@ -173,6 +179,62 @@ blockGrid[0][1].style.backgroundImage = 'url("grass2.png")';
 blockGrid[0][1].traverser = true;
 blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("grass2.png")';
 blockGrid[H_GRID - 1][1].traverser = true;
+
+var frame = 0;
+
+function loop() {
+  if (frame === 60) {
+    switch (direction) {
+      // Up
+      case "left":
+        if (vilainY > 0 && blockGrid[vilainX][vilainY - 1].traverser)
+          vilainY--; // ou y-=40;
+        break;
+        // Right
+      case "right":
+        if (vilainX < H_GRID - 1 && blockGrid[vilainX + 1][vilainY].traverser)
+          vilainX++;
+        break;
+        // Down
+      case "up":
+        if (vilainY < H_GRID - 1 && blockGrid[vilainX][vilainY + 1].traverser)
+          vilainY++;
+        break;
+        // Left
+      case "down":
+        if (vilainX > 0 && blockGrid[vilainX - 1][vilainY].traverser)
+          vilainX--;
+        break;
+    }
+    styleVilain.left = String(vilainX * GRID_SIZE) + 'px';
+    styleVilain.top = String(vilainY * GRID_SIZE) + 'px';
+
+    let random = random100();
+
+    if (random < 25) {
+      direction = "left";
+    }
+
+    if (random >= 25 && random < 50) {
+      direction = "right";
+    }
+
+    if (random >= 50 && random < 75) {
+      direction = "up";
+    }
+
+    if (random > 75) {
+      direction = "down";
+    }
+
+    frame = 0;
+  }
+
+  frame++;
+  window.requestAnimationFrame(loop);
+}
+// 60 x / seconde
+window.requestAnimationFrame(loop)
 
 // coffre au milieu
 //blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
