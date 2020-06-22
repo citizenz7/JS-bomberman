@@ -1,4 +1,4 @@
-const H_GRID = 24;
+const H_GRID = 20;
 const V_GRID = 16;
 const GRID_SIZE = 40;
 
@@ -27,27 +27,126 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.display = "flex";
     block.style.position = "absolute";
 
-    if (random100() > 75) {
-      /*block.style.backgroundColor = "black";*/
-      block.style.backgroundImage = 'url("pillar2.png")';
-      block.traverser = false;
+    if (random100() > 80) {
+      block.style.backgroundImage = 'url("ground2.jpg")';
+      block.style.backgroundSize = 'contain';
+      block.style.position = 'absolute';
+      block.style.zIndex = '90';
+      block.traverser = true;
+    }
 
-    } else if (random100() > 70) {
-      /*block.style.backgroundColor = "black";*/
+    else if (random100() > 80 && random100() <= 90) {
       block.style.backgroundImage = 'url("bois.jpg")';
+      block.style.backgroundSize = 'contain';
+      block.style.position = 'absolute';
+      block.style.zIndex = '90';
       block.traverser = false;
     }
 
-    else if (random100() > 97){
-      //block.style.backgroundColor = "black";
-      //block.style.backgroundImage = 'url("win2.png")';
-      //block.traverser = true;
-      const getRandom = (min, max) => Math.floor(Math.random()*(max-min+1)+min);
-      const vilain= document.querySelector('#vilain');
-      setInterval(() => {
-          vilain.style.left= getRandom(0, 300 - 200)+'px'; // Horizontally
-          vilain.style.top = getRandom(0, 300 - 200)+'px'; // Vertically
-      }, 1500); // every 1/2 second
+    else if (random100() > 95) {
+      block.style.backgroundImage = 'url("stallman.jpg")';
+      block.style.backgroundSize = 'contain';
+      block.style.position = 'absolute';
+      block.style.zIndex = '90';
+      block.traverser = true;
+    }
+
+    else if (random100() > 70) {
+      //block.style.backgroundColor = "red";
+      block.style.backgroundImage = 'url("wallbrick.jpg")';
+      block.style.backgroundSize = 'contain';
+      block.style.position = 'absolute';
+      block.style.zIndex = '90';
+      block.traverser = false;
+    }
+
+
+    else if (random100() > 97) {
+      block.style.backgroundImage = 'url("windows.png")';
+      block.style.backgroundSize = 'contain';
+      block.style.position = 'absolute';
+      block.style.zIndex = '90';
+      block.traverser = false;
+
+      // move div randomly
+      window.onload = function() {
+        var max_width = window.innerWidth;
+        var max_height = window.innerHeight;
+
+        var directions = {
+          left: 1,
+          up: 2,
+          right: 3,
+          down: 4
+        }
+        var direction = getRandomDirection();
+        var distance = getRandomDistance();
+
+        var target = document.getElementById("vilain");
+        var target_pos = {
+          top: 0,
+          left: 0
+        }
+
+        var i = 0;
+
+        var render_rate = 40;
+        var move_step = 2;
+
+        setInterval(function() {
+          i++;
+          if (i > distance) {
+            distance = getRandomDistance();
+            direction = getRandomDirection();
+            i = 0;
+          }
+          move(target, direction, move_step)
+        }, render_rate)
+
+        function getRandomDistance() {
+          return Math.floor((Math.random() * 40) + 1) + 5;
+        }
+
+        function getRandomDirection() {
+          return Math.floor((Math.random() * 4) + 1);
+        }
+
+        function move(el, direction, step) {
+          switch (direction) {
+            case directions.left: {
+              if (target_pos.left < max_width) {
+                target_pos.left += step;
+                target.style.left = target_pos.left + "px";
+              }
+              break;
+            }
+
+            case directions.up: {
+              if (target_pos.top < max_height) {
+                target_pos.top += step;
+                target.style.top = target_pos.top + "px";
+              }
+              break;
+            }
+
+            case directions.right: {
+              if (target_pos.left > 0) {
+                target_pos.left -= step;
+                target.style.left = target_pos.left + "px";
+              }
+              break;
+            }
+
+            case directions.down: {
+              if (target_pos.top > 0) {
+                target_pos.top -= step;
+                target.style.top = target_pos.top + "px";
+              }
+              break;
+            }
+          }
+        }
+      }
 
     }
 
@@ -76,7 +175,7 @@ blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("grass2.png")';
 blockGrid[H_GRID - 1][1].traverser = true;
 
 // coffre au milieu
-blockGrid[11][7].style.backgroundImage = 'url("windows.png")';
+//blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
 
 document.onkeydown = function(event) {
   var event = event || window.event,

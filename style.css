@@ -1,14 +1,19 @@
-body{
+body {
   background-color: grey;
 }
 
-#plateau{
-  background-color: white;
-  margin: auto;
-  position: relative;
-
+#corps {
+  display: flex;
+  flex-direction: row;
+  font-size: 3rem;
 }
-#pion{
+
+#plateau {
+  margin-top: 10px;
+  position: relative;
+}
+
+#pion {
   width: 40px;
   height: 40px;
   /*background-color: blue;
@@ -20,13 +25,30 @@ body{
   border-radius: 50%;
   position: absolute;
   z-index: 100;
+  background-size: contain;
+  background-position: center;
+  top: 0px;
+  left: 0px;
 }
 
-#vilain{
+#vilain {
   width: 40px;
   height: 40px;
   position: absolute;
   /*background-color: black;*/
   background-image: url("bill.png");
   background-size: contain;
+  left: 0;
+  top: 0;
+  z-index: 95;
+  overflow: hidden;
+}
+
+#ghost {
+  background-color: #def;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
