@@ -234,13 +234,14 @@ function loop() {
   frame++;
   window.requestAnimationFrame(loop);
 }
-// 60 x / seconde
-window.requestAnimationFrame(loop);
 
+// On crée l'animation - 60 x / seconde
+window.requestAnimationFrame(loop);
 
 // coffre au milieu
 // blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
 
+/* ----- touches du clavier ----- */
 document.onkeydown = function(event) {
   var event = event || window.event,
     keyCode = event.keyCode;
@@ -279,9 +280,12 @@ document.onkeydown = function(event) {
 }
 
 
+/* ----- Functions ----- */
+/*
 function randomColor() {
   return "#" + ((1 << 24) * Math.random() | 0).toString(16);
 }
+*/
 
 function random100() {
   return Math.floor(Math.random() * 100);

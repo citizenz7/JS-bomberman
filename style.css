@@ -1,3 +1,7 @@
+.container-fluid {
+  padding: 50px;
+}
+
 .back {
   background:
     linear-gradient(rgba(0, 0, 0, 0.8),
@@ -10,8 +14,8 @@
 
 .back2 {
     background:
-    linear-gradient(rgba(250, 150, 0, 0.1),
-    rgba(250, 150, 0, 0.1));
+    linear-gradient(rgba(250, 190, 0, 0.1),
+    rgba(250, 190, 0, 0.1));
     height: 640px;
 }
 
@@ -38,30 +42,6 @@
 }
 
 #vilain {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  /*background-color: black;*/
-  background-image: url("bill.png");
-  background-size: contain;
-  left: 0;
-  top: 0;
-  z-index: 95;
-}
-
-#vilain2 {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  /*background-color: black;*/
-  background-image: url("bill.png");
-  background-size: contain;
-  left: 0;
-  top: 0;
-  z-index: 95;
-}
-
-#vilain3 {
   width: 40px;
   height: 40px;
   position: absolute;
