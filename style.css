@@ -8,6 +8,13 @@
   height: 800px;
 }
 
+.back2 {
+    background:
+    linear-gradient(rgba(250, 150, 0, 0.1),
+    rgba(250, 150, 0, 0.1));
+    height: 640px;
+}
+
 #plateau {
   position: relative;
 }
@@ -67,7 +74,7 @@
 }
 
 .title1 {
-  font-size: 26px;
+  font-size: 32px;
 }
 
 .characters {

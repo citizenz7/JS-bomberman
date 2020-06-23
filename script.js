@@ -20,6 +20,16 @@ var vilain = document.getElementById('vilain'),
   vilainY = vilain.offsetTop,
   direction = "right";
 
+let bombe = document.createElement("div");
+  bombe.style.width = GRID_SIZE + "px";
+  bombe.style.height = GRID_SIZE + "px";
+  bombe.style.position = "absolute";
+  bombe.style.backgroundImage = "bomb.png";
+  bombe.style.backgroundRepeat = "no-repeat";
+  bombe.style.backgroundSize = "contain";
+  //bombe.style.backgroundPosition = "center";
+  bombe.style.zIndex = "100";
+  bombe.id = "bombe";
 
 // tableau
 var blockGrid = [];
@@ -265,10 +275,18 @@ document.onkeydown = function(event) {
       if (x > 0 && blockGrid[x - 1][y].traverser)
         x--;
       break;
+      // Space
+    case 32:
+      createBomb();
+      break;
+
+    default: return;
   }
+
   stylePion.left = String(x * GRID_SIZE) + 'px';
   stylePion.top = String(y * GRID_SIZE) + 'px';
 }
+
 
 function randomColor() {
   return "#" + ((1 << 24) * Math.random() | 0).toString(16);
@@ -276,4 +294,23 @@ function randomColor() {
 
 function random100() {
   return Math.floor(Math.random() * 100);
+}
+
+function createBomb() {
+
+    bombe.style.left = String(0) + "px";
+    bombe.style.top = String(0) + "px";
+
+    document.getElementById("plateau").appendChild(bombe);
+
+    console.log(bombe);
+
+    //setTimeout(disparitionBombe, 1000);
+
+}
+
+function disparitionBombe() {
+  if (document.getElementById("bombe")) {
+    document.getElementById("bombe").remove();
+  }
 }
