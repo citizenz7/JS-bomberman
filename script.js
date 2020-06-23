@@ -20,16 +20,16 @@ var vilain = document.getElementById('vilain'),
   vilainY = vilain.offsetTop,
   direction = "right";
 
-let bombe = document.createElement("div");
-  bombe.style.width = GRID_SIZE + "px";
-  bombe.style.height = GRID_SIZE + "px";
-  bombe.style.position = "absolute";
-  bombe.style.backgroundImage = "bomb.png";
-  bombe.style.backgroundRepeat = "no-repeat";
-  bombe.style.backgroundSize = "contain";
-  //bombe.style.backgroundPosition = "center";
-  bombe.style.zIndex = "100";
-  bombe.id = "bombe";
+var bombe = document.createElement("div");
+bombe.style.width = GRID_SIZE + "px";
+bombe.style.height = GRID_SIZE + "px";
+bombe.style.position = "absolute";
+bombe.style.backgroundImage = "url('bomb.png')";
+bombe.style.backgroundRepeat = "no-repeat";
+bombe.style.backgroundSize = "contain";
+//bombe.style.backgroundPosition = "center";
+bombe.style.zIndex = "100";
+bombe.id = "bombe";
 
 // tableau
 var blockGrid = [];
@@ -50,34 +50,26 @@ for (var i = 0; i < H_GRID; i++) {
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = true;
-    }
-
-    else if (random100() > 88) {
+    } else if (random100() > 88) {
       block.style.backgroundImage = 'url("bois.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    }
-
-    else if (random100() > 95) {
+    } else if (random100() > 95) {
       block.style.backgroundImage = 'url("stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    }
-
-    else if (random100() > 80) {
+    } else if (random100() > 80) {
       //block.style.backgroundColor = "red";
       block.style.backgroundImage = 'url("wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    }
-
-    else if (random100() > 97) {
+    } else if (random100() > 97) {
       block.style.backgroundImage = 'url("windows.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -165,9 +157,7 @@ for (var i = 0; i < H_GRID; i++) {
         }
       }
       */
-    }
-
-    else {
+    } else {
       /*block.style.backgroundColor = "green";*/
       block.style.backgroundImage = 'url("grass2.png")';
       block.traverser = true;
@@ -280,7 +270,8 @@ document.onkeydown = function(event) {
       createBomb();
       break;
 
-    default: return;
+    default:
+      return;
   }
 
   stylePion.left = String(x * GRID_SIZE) + 'px';
@@ -297,16 +288,17 @@ function random100() {
 }
 
 function createBomb() {
+  if (!document.getElementById("bombe")) {
 
-    bombe.style.left = String(0) + "px";
-    bombe.style.top = String(0) + "px";
+    bombe.style.left = String(x * GRID_SIZE) + "px";
+    bombe.style.top = String(y * GRID_SIZE) + "px";
 
     document.getElementById("plateau").appendChild(bombe);
 
     console.log(bombe);
 
-    //setTimeout(disparitionBombe, 1000);
-
+    setTimeout(disparitionBombe, 1500);
+  }
 }
 
 function disparitionBombe() {
