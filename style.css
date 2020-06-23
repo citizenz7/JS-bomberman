@@ -1,15 +1,14 @@
-body {
-  background-color: grey;
-}
-
-#corps {
-  display: flex;
-  flex-direction: row;
-  font-size: 3rem;
+.back {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.8)),
+    url("back3.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 800px;
 }
 
 #plateau {
-  margin-top: 10px;
   position: relative;
 }
 
@@ -41,14 +40,37 @@ body {
   left: 0;
   top: 0;
   z-index: 95;
-  overflow: hidden;
 }
 
-#ghost {
-  background-color: #def;
-  height: 40px;
+#vilain2 {
   width: 40px;
+  height: 40px;
   position: absolute;
+  /*background-color: black;*/
+  background-image: url("bill.png");
+  background-size: contain;
   left: 0;
   top: 0;
+  z-index: 95;
+}
+
+#vilain3 {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  /*background-color: black;*/
+  background-image: url("bill.png");
+  background-size: contain;
+  left: 0;
+  top: 0;
+  z-index: 95;
+}
+
+.title1 {
+  font-size: 26px;
+}
+
+.characters {
+  max-height: 40px;
+  margin-bottom: 20px;
 }

@@ -14,11 +14,12 @@ var pion = document.getElementById('pion'),
   x = pion.offsetLeft,
   y = pion.offsetTop;
 
-  var vilain = document.getElementById('vilain'),
-    styleVilain = vilain.style,
-    vilainX = vilain.offsetLeft,
-    vilainY = vilain.offsetTop,
-    direction = "right";
+var vilain = document.getElementById('vilain'),
+  styleVilain = vilain.style,
+  vilainX = vilain.offsetLeft,
+  vilainY = vilain.offsetTop,
+  direction = "right";
+
 
 // tableau
 var blockGrid = [];
@@ -41,7 +42,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = true;
     }
 
-    else if (random100() > 80 && random100() <= 90) {
+    else if (random100() > 88) {
       block.style.backgroundImage = 'url("bois.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -54,10 +55,10 @@ for (var i = 0; i < H_GRID; i++) {
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
-      block.traverser = true;
+      block.traverser = false;
     }
 
-    else if (random100() > 70) {
+    else if (random100() > 80) {
       //block.style.backgroundColor = "red";
       block.style.backgroundImage = 'url("wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
@@ -234,10 +235,11 @@ function loop() {
   window.requestAnimationFrame(loop);
 }
 // 60 x / seconde
-window.requestAnimationFrame(loop)
+window.requestAnimationFrame(loop);
+
 
 // coffre au milieu
-//blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
+// blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
 
 document.onkeydown = function(event) {
   var event = event || window.event,
