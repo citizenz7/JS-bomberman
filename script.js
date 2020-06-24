@@ -244,7 +244,7 @@ function loop() {
 
 
   if (bombe.explode > 0 && bombe.explode < 30) {
-    document.getElementById("bombe").style.backgroundImage = "url('fire.png')";
+    document.getElementById("bombe").style.backgroundImage = "url('pow1.png')";
   }
 
   else if (bombe.explode === 0) {
@@ -345,17 +345,18 @@ function createBomb() {
     document.getElementById("plateau").appendChild(bombe);
 
     //setTimeout(disparitionBombe, 1500);
-    bombe.explode = 60;
+    // la bombe explose après 2 secondes
+    bombe.explode = 120;
   }
 }
 
 
 function explosionBombe() {
   if (document.getElementById("bombe")) {
-    document.getElementById("bombe").style.backgroundImage = "url('fire.png')";
+    document.getElementById("bombe").style.backgroundImage = "url('pow1.png')";
   }
 
-  setTimeout(disparitionBombe, 750);
+  setTimeout(disparitionBombe, 1500);
 }
 
 
