@@ -1,4 +1,4 @@
-// Const
+// const
 const H_GRID = 16;
 const V_GRID = 16;
 const GRID_SIZE = 40;
@@ -6,7 +6,9 @@ const GRID_SIZE = 40;
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
-// Var
+
+
+// var
 var plateau = document.getElementById('plateau');
 plateau.style.width = WINDOW_WIDTH;
 plateau.style.height = WINDOW_HEIGHT;
@@ -26,7 +28,7 @@ var bombe = document.createElement("div");
 bombe.style.width = GRID_SIZE + "px";
 bombe.style.height = GRID_SIZE + "px";
 bombe.style.position = "absolute";
-bombe.style.backgroundImage = "url('bomb.png')";
+bombe.style.backgroundImage = "url('img/bomb.png')";
 bombe.style.backgroundRepeat = "no-repeat";
 bombe.style.backgroundSize = "contain";
 bombe.style.backgroundPosition = "center";
@@ -34,7 +36,7 @@ bombe.style.zIndex = "100";
 bombe.id = "bombe";
 bombe.explode = -1;
 
-// tableau
+// var + tableau
 var blockGrid = [];
 // le x c'est le i, et le j c'est le y
 // le j n'apparait pas car c'est juste pour créer des tableaux
@@ -48,36 +50,40 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.position = "absolute";
 
     if (random100() > 80) {
-      block.style.backgroundImage = 'url("ground2.jpg")';
+      block.style.backgroundImage = 'url("img/ground2.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = true;
     }
+
     else if (random100() > 88) {
-      block.style.backgroundImage = 'url("bois.jpg")';
+      block.style.backgroundImage = 'url("img/bois.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
     }
+
     else if (random100() > 95) {
-      block.style.backgroundImage = 'url("stallman.jpg")';
+      block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
     }
+
     else if (random100() > 80) {
       //block.style.backgroundColor = "red";
-      block.style.backgroundImage = 'url("wallbrick.jpg")';
+      block.style.backgroundImage = 'url("img/wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
     }
+
     else if (random100() > 97) {
-      block.style.backgroundImage = 'url("windows.png")';
+      block.style.backgroundImage = 'url("img/windows.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
@@ -165,7 +171,7 @@ for (var i = 0; i < H_GRID; i++) {
       }
       */
     } else {
-      block.style.backgroundImage = 'url("grass2.png")';
+      block.style.backgroundImage = 'url("img/grass2.png")';
       block.traverser = true;
     }
 
@@ -178,14 +184,14 @@ for (var i = 0; i < H_GRID; i++) {
 }
 
 
-// on met rien en position 0,1
-blockGrid[0][0].style.backgroundImage = 'url("grass2.png")';
+// on ne met rien en position 0,1
+blockGrid[0][0].style.backgroundImage = 'url("img/grass2.png")';
 blockGrid[0][0].traverser = true;
-blockGrid[1][0].style.backgroundImage = 'url("grass2.png")';
+blockGrid[1][0].style.backgroundImage = 'url("img/grass2.png")';
 blockGrid[1][0].traverser = true;
-blockGrid[0][1].style.backgroundImage = 'url("grass2.png")';
+blockGrid[0][1].style.backgroundImage = 'url("img/grass2.png")';
 blockGrid[0][1].traverser = true;
-blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("grass2.png")';
+blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("img/grass2.png")';
 blockGrid[H_GRID - 1][1].traverser = true;
 
 
@@ -195,7 +201,7 @@ var frame = 0;
 function loop() {
   if (frame === 60) {
     switch (direction) {
-      // Up
+      // Left
       case "left":
         if (vilainY > 0 && blockGrid[vilainX][vilainY - 1].traverser)
           vilainY--; // ou y-=40;
@@ -205,17 +211,18 @@ function loop() {
         if (vilainX < H_GRID - 1 && blockGrid[vilainX + 1][vilainY].traverser)
           vilainX++;
         break;
-        // Down
+        // Up
       case "up":
         if (vilainY < H_GRID - 1 && blockGrid[vilainX][vilainY + 1].traverser)
           vilainY++;
         break;
-        // Left
+        // Down
       case "down":
         if (vilainX > 0 && blockGrid[vilainX - 1][vilainY].traverser)
           vilainX--;
         break;
     }
+
     styleVilain.left = String(vilainX * GRID_SIZE) + 'px';
     styleVilain.top = String(vilainY * GRID_SIZE) + 'px';
 
@@ -244,15 +251,13 @@ function loop() {
 
 
   if (bombe.explode > 0 && bombe.explode < 30) {
-    document.getElementById("bombe").style.backgroundImage = "url('pow1.png')";
-  }
-
-  else if (bombe.explode === 0) {
+    document.getElementById("bombe").style.backgroundImage = "url('img/pow1.png')";
+  } else if (bombe.explode === 0) {
     blockGrid[bombe.x][bombe.y].traverser = true;
     document.getElementById("bombe").remove();
   }
 
-  if(bombe.explode > -1) {
+  if (bombe.explode > -1) {
     bombe.explode--;
   }
 
@@ -263,7 +268,8 @@ function loop() {
 window.requestAnimationFrame(loop);
 
 // coffre au milieu
-// blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
+blockGrid[8][8].style.backgroundImage = 'url("img/bsod.png")';
+blockGrid[8][8].style.backgroundSize = 'contain';
 
 
 /* ----- touches du clavier ----- */
@@ -325,7 +331,7 @@ function createBomb() {
     bombe.style.width = GRID_SIZE + "px";
     bombe.style.height = GRID_SIZE + "px";
     bombe.style.position = "absolute";
-    bombe.style.backgroundImage = "url('bomb.png')";
+    bombe.style.backgroundImage = "url('img/bomb.png')";
     bombe.style.backgroundRepeat = "no-repeat";
     bombe.style.backgroundSize = "contain";
     //bombe.style.backgroundPosition = "center";
@@ -353,7 +359,7 @@ function createBomb() {
 
 function explosionBombe() {
   if (document.getElementById("bombe")) {
-    document.getElementById("bombe").style.backgroundImage = "url('pow1.png')";
+    document.getElementById("bombe").style.backgroundImage = "url('img/pow1.png')";
   }
 
   setTimeout(disparitionBombe, 1500);

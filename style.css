@@ -6,7 +6,7 @@
   background:
     linear-gradient(rgba(0, 0, 0, 0.8),
     rgba(0, 0, 0, 0.8)),
-    url("back3.jpg");
+    url("img/back3.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   height: 800px;
@@ -30,7 +30,7 @@
   border-style: double;
   border-color: grey;
   border-width: 1px;*/
-  background-image: url("tux-batman.png");
+  background-image: url("img/tux-batman.png");
   background-size: contain;
   border-radius: 50%;
   position: absolute;
@@ -46,7 +46,7 @@
   height: 40px;
   position: absolute;
   /*background-color: black;*/
-  background-image: url("bill.png");
+  background-image: url("img/bill.png");
   background-size: contain;
   left: 0;
   top: 0;
