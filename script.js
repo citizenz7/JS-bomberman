@@ -1,5 +1,5 @@
 // Const
-const H_GRID = 20;
+const H_GRID = 16;
 const V_GRID = 16;
 const GRID_SIZE = 40;
 
@@ -242,21 +242,18 @@ function loop() {
 
   frame++;
 
-  if(bombe.explode > 0) {
-    bombe.explode--;
-    console.log(bombe.explode);
-  }
 
   if (bombe.explode > 0 && bombe.explode < 30) {
     document.getElementById("bombe").style.backgroundImage = "url('fire.png')";
-    console.log("explosionBombe");
   }
 
   else if (bombe.explode === 0) {
     blockGrid[bombe.x][bombe.y].traverser = true;
-    console.log(bombe);
     document.getElementById("bombe").remove();
-    console.log("disparitionBombe");
+  }
+
+  if(bombe.explode > -1) {
+    bombe.explode--;
   }
 
   window.requestAnimationFrame(loop);
@@ -314,6 +311,7 @@ document.onkeydown = function(event) {
 function randomColor() {
   return "#" + ((1 << 24) * Math.random() | 0).toString(16);
 }
+
 
 function random100() {
   return Math.floor(Math.random() * 100);
