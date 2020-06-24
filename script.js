@@ -1,3 +1,4 @@
+// Const
 const H_GRID = 20;
 const V_GRID = 16;
 const GRID_SIZE = 40;
@@ -5,6 +6,7 @@ const GRID_SIZE = 40;
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
+// Var
 var plateau = document.getElementById('plateau');
 plateau.style.width = WINDOW_WIDTH;
 plateau.style.height = WINDOW_HEIGHT;
@@ -27,9 +29,10 @@ bombe.style.position = "absolute";
 bombe.style.backgroundImage = "url('bomb.png')";
 bombe.style.backgroundRepeat = "no-repeat";
 bombe.style.backgroundSize = "contain";
-//bombe.style.backgroundPosition = "center";
+bombe.style.backgroundPosition = "center";
 bombe.style.zIndex = "100";
 bombe.id = "bombe";
+bombe.explode = -1;
 
 // tableau
 var blockGrid = [];
@@ -50,26 +53,30 @@ for (var i = 0; i < H_GRID; i++) {
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = true;
-    } else if (random100() > 88) {
+    }
+    else if (random100() > 88) {
       block.style.backgroundImage = 'url("bois.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    } else if (random100() > 95) {
+    }
+    else if (random100() > 95) {
       block.style.backgroundImage = 'url("stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    } else if (random100() > 80) {
+    }
+    else if (random100() > 80) {
       //block.style.backgroundColor = "red";
       block.style.backgroundImage = 'url("wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    } else if (random100() > 97) {
+    }
+    else if (random100() > 97) {
       block.style.backgroundImage = 'url("windows.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -158,7 +165,6 @@ for (var i = 0; i < H_GRID; i++) {
       }
       */
     } else {
-      /*block.style.backgroundColor = "green";*/
       block.style.backgroundImage = 'url("grass2.png")';
       block.traverser = true;
     }
@@ -171,6 +177,7 @@ for (var i = 0; i < H_GRID; i++) {
   }
 }
 
+
 // on met rien en position 0,1
 blockGrid[0][0].style.backgroundImage = 'url("grass2.png")';
 blockGrid[0][0].traverser = true;
@@ -181,6 +188,8 @@ blockGrid[0][1].traverser = true;
 blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("grass2.png")';
 blockGrid[H_GRID - 1][1].traverser = true;
 
+
+// Loop pour déplacement vilain
 var frame = 0;
 
 function loop() {
@@ -232,6 +241,24 @@ function loop() {
   }
 
   frame++;
+
+  if(bombe.explode > 0) {
+    bombe.explode--;
+    console.log(bombe.explode);
+  }
+
+  if (bombe.explode > 0 && bombe.explode < 30) {
+    document.getElementById("bombe").style.backgroundImage = "url('fire.png')";
+    console.log("explosionBombe");
+  }
+
+  else if (bombe.explode === 0) {
+    blockGrid[bombe.x][bombe.y].traverser = true;
+    console.log(bombe);
+    document.getElementById("bombe").remove();
+    console.log("disparitionBombe");
+  }
+
   window.requestAnimationFrame(loop);
 }
 
@@ -240,6 +267,7 @@ window.requestAnimationFrame(loop);
 
 // coffre au milieu
 // blockGrid[10][7].style.backgroundImage = 'url("windows.png")';
+
 
 /* ----- touches du clavier ----- */
 document.onkeydown = function(event) {
@@ -266,7 +294,7 @@ document.onkeydown = function(event) {
       if (x > 0 && blockGrid[x - 1][y].traverser)
         x--;
       break;
-      // Space
+      // Space bar
     case 32:
       createBomb();
       break;
@@ -281,32 +309,61 @@ document.onkeydown = function(event) {
 
 
 /* ----- Functions ----- */
-/*
+
+// Pas utilisée mais bon... ça peut être vachement super utile :D
 function randomColor() {
   return "#" + ((1 << 24) * Math.random() | 0).toString(16);
 }
-*/
 
 function random100() {
   return Math.floor(Math.random() * 100);
 }
 
+
 function createBomb() {
   if (!document.getElementById("bombe")) {
+
+    bombe = document.createElement("div");
+    bombe.style.width = GRID_SIZE + "px";
+    bombe.style.height = GRID_SIZE + "px";
+    bombe.style.position = "absolute";
+    bombe.style.backgroundImage = "url('bomb.png')";
+    bombe.style.backgroundRepeat = "no-repeat";
+    bombe.style.backgroundSize = "contain";
+    //bombe.style.backgroundPosition = "center";
+    bombe.style.zIndex = "100";
+    bombe.id = "bombe";
 
     bombe.style.left = String(x * GRID_SIZE) + "px";
     bombe.style.top = String(y * GRID_SIZE) + "px";
 
+    // x, y de la bombe
+    // on ne traverse pas la bombe
+    blockGrid[x][y].traverser = false;
+
+    bombe.x = x;
+    bombe.y = y;
+
     document.getElementById("plateau").appendChild(bombe);
 
-    console.log(bombe);
-
-    setTimeout(disparitionBombe, 1500);
+    //setTimeout(disparitionBombe, 1500);
+    bombe.explode = 60;
   }
 }
 
+
+function explosionBombe() {
+  if (document.getElementById("bombe")) {
+    document.getElementById("bombe").style.backgroundImage = "url('fire.png')";
+  }
+
+  setTimeout(disparitionBombe, 750);
+}
+
+
 function disparitionBombe() {
   if (document.getElementById("bombe")) {
+    blockGrid[bombe.x][bombe.y].traverser = true;
     document.getElementById("bombe").remove();
   }
 }
