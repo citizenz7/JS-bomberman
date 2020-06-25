@@ -1,68 +1,17 @@
-// const
 const H_GRID = 16;
 const V_GRID = 16;
 const GRID_SIZE = 40;
-
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
-// var
 var plateau = document.getElementById('plateau');
 plateau.style.width = WINDOW_WIDTH;
 plateau.style.height = WINDOW_HEIGHT;
 
 var pion = document.getElementById('pion'),
   stylePion = pion.style,
-  x = pion.offsetLeft,
-  y = pion.offsetTop;
-
-var vilain = document.getElementById('vilain'),
-  styleVilain = vilain.style,
-  // vilainX = vilain.offsetLeft,
-  // vilainY = vilain.offsetTop,
-  vilainX = Math.round(Math.random() * H_GRID),
-  vilainY = Math.round(Math.random() * V_GRID),
-  direction = "right";
-
-var bug = document.getElementById('bug'),
-  styleBug = bug.style,
-  // bugX = vilain.offsetLeft,
-  // bugY = vilain.offsetTop,
-  bugX = Math.round(Math.random() * H_GRID),
-  bugY = Math.round(Math.random() * V_GRID);
-
-// /* ----- VILAIN 1 = bill ---- */
-// var vilain = document.createElement("div");
-// vilain.style.width = "40px",
-// vilain.style.height = "40px",
-// vilain.style.position = "absolute",
-// vilain.style.backgroundImage = "url('img/bill.png')",
-// vilain.style.backgroundRepeat = "no-repeat",
-// vilain.style.backgroundSize = "contain",
-// vilain.style.zIndex = "100",
-// vilain.id = "vilain";
-// var styleVilain = vilain.style,
-//   vilainX = Math.round(Math.random() * H_GRID),
-//   vilainY = Math.round(Math.random() * V_GRID),
-//   direction = "right";
-//   console.log(vilain);
-//
-// /* ----- VILAIN 2 = bug ---- */
-// var bug = document.createElement("div");
-// bug.style.position = "absolute";
-// bug.style.backgroundImage = "url('img/bug.png')";
-// bug.style.backgroundRepeat = "no-repeat";
-// bug.style.backgroundSize = "contain";
-// bug.style.zIndex = "100";
-// bug.id = "bug";
-// var styleBug = bug.style,
-//   bugX = Math.round(Math.random() * H_GRID),
-//   bugY = Math.round(Math.random() * V_GRID);
-//   console.log(bug);
-
-
-
-
+  x = 0,
+  y = 0;
 
 var bombe = document.createElement("div");
 bombe.style.width = GRID_SIZE + "px";
@@ -75,10 +24,8 @@ bombe.style.zIndex = "100";
 bombe.id = "bombe";
 bombe.explode = -1;
 
-// var + tableau
+
 var blockGrid = [];
-// le x c'est le i, et le j c'est le y
-// le j n'apparait pas car c'est juste pour créer des tableaux
 for (var i = 0; i < H_GRID; i++) {
   blockGrid.push([]);
   for (var j = 0; j < V_GRID; j++) {
@@ -88,32 +35,7 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.display = "flex";
     block.style.position = "absolute";
 
-    if (random100() > 80) {
-      block.style.backgroundImage = 'url("img/ground2.jpg")';
-      block.style.backgroundSize = 'contain';
-      block.style.position = 'absolute';
-      block.style.zIndex = '90';
-      block.traverser = true;
-    }
-
-    else if (random100() > 88) {
-      block.style.backgroundImage = 'url("img/bois.jpg")';
-      block.style.backgroundSize = 'contain';
-      block.style.position = 'absolute';
-      block.style.zIndex = '90';
-      block.traverser = false;
-    }
-
-    else if (random100() > 95) {
-      block.style.backgroundImage = 'url("img/stallman.jpg")';
-      block.style.backgroundSize = 'contain';
-      block.style.position = 'absolute';
-      block.style.zIndex = '90';
-      block.traverser = false;
-    }
-
-    else if (random100() > 80) {
-      //block.style.backgroundColor = "red";
+    if (random100() > 70) {
       block.style.backgroundImage = 'url("img/wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -121,98 +43,16 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
     }
 
-    else if (random100() > 97) {
-      block.style.backgroundImage = 'url("img/windows.png")';
+    else if (random100() > 98) {
+      block.style.backgroundImage = 'url("img/bsod.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-
-      // move div randomly
-      /*
-      window.onload = function() {
-        var max_width = window.innerWidth;
-        var max_height = window.innerHeight;
-
-        var directions = {
-          left: 1,
-          up: 2,
-          right: 3,
-          down: 4
-        }
-        var direction = getRandomDirection();
-        var distance = getRandomDistance();
-
-        var target = document.getElementById("vilain");
-        var target_pos = {
-          top: 0,
-          left: 0
-        }
-
-        var i = 0;
-
-        var render_rate = 40;
-        var move_step = 2;
-
-        setInterval(function() {
-          i++;
-          if (i > distance) {
-            distance = getRandomDistance();
-            direction = getRandomDirection();
-            i = 0;
-          }
-          move(target, direction, move_step)
-        }, render_rate)
-
-        function getRandomDistance() {
-          return Math.floor((Math.random() * 40) + 1) + 5;
-        }
-
-        function getRandomDirection() {
-          return Math.floor((Math.random() * 4) + 1);
-        }
-
-        function move(el, direction, step) {
-          switch (direction) {
-            case directions.left: {
-              if (target_pos.left < max_width) {
-                target_pos.left += step;
-                target.style.left = target_pos.left + "px";
-              }
-              break;
-            }
-
-            case directions.up: {
-              if (target_pos.top < max_height) {
-                target_pos.top += step;
-                target.style.top = target_pos.top + "px";
-              }
-              break;
-            }
-
-            case directions.right: {
-              if (target_pos.left > 0) {
-                target_pos.left -= step;
-                target.style.left = target_pos.left + "px";
-              }
-              break;
-            }
-
-            case directions.down: {
-              if (target_pos.top > 0) {
-                target_pos.top -= step;
-                target.style.top = target_pos.top + "px";
-              }
-              break;
-            }
-          }
-        }
-      }
-      */
     }
 
     else if (random100() > 97) {
-      block.style.backgroundImage = 'url("img/bsod.png")';
+      block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
@@ -232,72 +72,101 @@ for (var i = 0; i < H_GRID; i++) {
   }
 }
 
+var vilainListe = []
+for (var i = 0; i < 8; i++) {
+  let vilain = document.createElement('div');
 
-// on ne met rien en position 0,1
-blockGrid[0][0].style.backgroundImage = 'url("img/grass2.png")';
-blockGrid[0][0].traverser = true;
-blockGrid[1][0].style.backgroundImage = 'url("img/grass2.png")';
-blockGrid[1][0].traverser = true;
-blockGrid[0][1].style.backgroundImage = 'url("img/grass2.png")';
-blockGrid[0][1].traverser = true;
-blockGrid[H_GRID - 1][1].style.backgroundImage = 'url("img/grass2.png")';
-blockGrid[H_GRID - 1][1].traverser = true;
+  let x = 0;
+  let y = 0;
+  while (!blockGrid[x][y].traverser || (x === 0 && y === 0)) {
+    x = Math.floor(Math.random() * (H_GRID))
+    y = Math.floor(Math.random() * (V_GRID))
+  }
+  blockGrid[x][y].traverser = false;
+  vilain.vilainX = x;
+  vilain.vilainY = y;
+  vilain.direction = "right";
+  vilain.id = "vilain" + String(i);
+  vilain.style.width = "40px";
+  vilain.style.height = "40px";
+  vilain.style.position = "absolute";
+  vilain.style.backgroundImage = "url('img/bug.png')";
+  vilain.style.backgroundSize = "contain";
+  vilain.style.backgroundRepeat = "no-repeat";
+  vilain.style.left = String(vilain.vilainX * GRID_SIZE) + "px";
+  vilain.style.top = String(vilain.vilainY * GRID_SIZE) + "px";
+  vilain.style.zIndex = "95";
+  plateau.appendChild(vilain);
 
+  vilainListe.push(vilain)
+}
 
-// Loop pour déplacement vilain
+//blockGrid[10][10].style.backgroundColor = "blue";
+
 var frame = 0;
 
 function loop() {
   if (frame === 60) {
-    switch (direction) {
-      // Left
-      case "left":
-        if (vilainY > 0 && blockGrid[vilainX][vilainY - 1].traverser)
-          vilainY--; // ou y-=40;
-        break;
-        // Right
-      case "right":
-        if (vilainX < H_GRID - 1 && blockGrid[vilainX + 1][vilainY].traverser)
-          vilainX++;
-        break;
-        // Up
-      case "up":
-        if (vilainY < H_GRID - 1 && blockGrid[vilainX][vilainY + 1].traverser)
-          vilainY++;
-        break;
-        // Down
-      case "down":
-        if (vilainX > 0 && blockGrid[vilainX - 1][vilainY].traverser)
-          vilainX--;
-        break;
-    }
+    for (var i = 0; i < vilainListe.length; i++) {
+      let vilain = vilainListe[i];
+      let vilainX = vilain.vilainX
+      let vilainY = vilain.vilainY
+      let direction = vilain.direction
+      blockGrid[vilainX][vilainY].traverser = true;
+      switch (direction) {
+        case "left":
+          if (vilainY > 0 && blockGrid[vilainX][vilainY - 1].traverser)
+            vilainY--;
+          break;
 
-    styleVilain.left = String(vilainX * GRID_SIZE) + 'px';
-    styleVilain.top = String(vilainY * GRID_SIZE) + 'px';
+        case "right":
 
-    let random = random100();
+          if (vilainX < H_GRID - 1 && blockGrid[vilainX + 1][vilainY].traverser)
+            vilainX++;
+          break;
 
-    if (random < 25) {
-      direction = "left";
-    }
+        case "up":
+          console.log(vilainY)
+          if (vilainY < V_GRID - 1 && blockGrid[vilainX][vilainY + 1].traverser)
 
-    if (random >= 25 && random < 50) {
-      direction = "right";
-    }
+            vilainY++;
+          break;
 
-    if (random >= 50 && random < 75) {
-      direction = "up";
-    }
+        case "down":
+          if (vilainX > 0 && blockGrid[vilainX - 1][vilainY].traverser)
+            vilainX--;
+          break;
+      }
+      vilain.style.left = String(vilainX * GRID_SIZE) + 'px';
+      vilain.style.top = String(vilainY * GRID_SIZE) + 'px';
 
-    if (random > 75) {
-      direction = "down";
+      let random = random100();
+
+      if (random < 25) {
+        direction = "left";
+      }
+
+      if (random >= 25 && random < 50) {
+        direction = "right";
+      }
+
+      if (random >= 50 && random < 75) {
+        direction = "up";
+      }
+
+      if (random > 75) {
+        direction = "down";
+      }
+
+      vilain.vilainX = vilainX
+      vilain.vilainY = vilainY
+      vilain.direction = direction
+      blockGrid[vilainX][vilainY].traverser = false;
     }
 
     frame = 0;
   }
-
   frame++;
-
 
   if (bombe.explode > 0 && bombe.explode < 50) {
     document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
@@ -311,93 +180,12 @@ function loop() {
   }
 
   window.requestAnimationFrame(loop);
+
 }
 
-// On crée l'animation - 60 x / seconde
 window.requestAnimationFrame(loop);
 
 
-
-/* ----- bug = bug ----- */
-//Loop pour déplacement bug
-var frame2 = 0;
-
-function loop2() {
-  if (frame2 === 60) {
-    switch (direction) {
-      // Left
-      case "left":
-        if (bugY > 0 && blockGrid[bugX][bugY - 1].traverser)
-          bugY--; // ou y-=40;
-        break;
-        // Right
-      case "right":
-        if (bugX < H_GRID - 1 && blockGrid[bugX + 1][bugY].traverser)
-          bugX++;
-        break;
-        // Up
-      case "up":
-        if (bugY < H_GRID - 1 && blockGrid[bugX][bugY + 1].traverser)
-          bugY++;
-        break;
-        // Down
-      case "down":
-        if (bugX > 0 && blockGrid[bugX - 1][bugY].traverser)
-          bugX--;
-        break;
-    }
-
-    styleBug.left = String(bugX * GRID_SIZE) + 'px';
-    styleBug.top = String(bugY * GRID_SIZE) + 'px';
-
-    let random = random100();
-
-    if (random < 25) {
-      direction = "left";
-    }
-
-    if (random >= 25 && random < 50) {
-      direction = "right";
-    }
-
-    if (random >= 50 && random < 75) {
-      direction = "up";
-    }
-
-    if (random > 75) {
-      direction = "down";
-    }
-
-    frame2 = 0;
-  }
-
-  frame2++;
-
-  //
-  // if (bombe.explode > 0 && bombe.explode < 30) {
-  //   document.getElementById("bombe").style.backgroundImage = "url('img/pow1.png')";
-  // } else if (bombe.explode === 0) {
-  //   blockGrid[bombe.x][bombe.y].traverser = true;
-  //   document.getElementById("bombe").remove();
-  // }
-  //
-  // if (bombe.explode > -1) {
-  //   bombe.explode--;
-  // }
-  //
-  window.requestAnimationFrame(loop2);
-}
-
-// On crée l'animation - 60 x / seconde
-window.requestAnimationFrame(loop2);
-
-
-// BSOD
-// blockGrid[8][8].style.backgroundImage = 'url("img/bsod.png")';
-// blockGrid[8][8].style.backgroundSize = 'contain';
-
-
-/* ----- touches du clavier ----- */
 document.onkeydown = function(event) {
   var event = event || window.event,
     keyCode = event.keyCode;
@@ -407,47 +195,41 @@ document.onkeydown = function(event) {
       if (y > 0 && blockGrid[x][y - 1].traverser)
         y--; // ou y-=40;
       break;
-      // Right
+    // Right
     case 39:
       if (x < H_GRID - 1 && blockGrid[x + 1][y].traverser)
         x++;
       break;
-      // Down
+    // Down
     case 40:
       if (y < H_GRID - 1 && blockGrid[x][y + 1].traverser)
         y++;
       break;
-      // Left
+    // Left
     case 37:
       if (x > 0 && blockGrid[x - 1][y].traverser)
         x--;
       break;
-      // Space bar
+    // Space bar
     case 32:
       createBomb();
       break;
-
+    // default
     default:
       return;
-  }
 
+  }
   stylePion.left = String(x * GRID_SIZE) + 'px';
   stylePion.top = String(y * GRID_SIZE) + 'px';
 }
 
-
-/* ----- Functions ----- */
-
-// Pas utilisée mais bon... ça peut être vachement super utile :D
 function randomColor() {
   return "#" + ((1 << 24) * Math.random() | 0).toString(16);
 }
 
-
 function random100() {
   return Math.floor(Math.random() * 100);
 }
-
 
 function createBomb() {
   if (!document.getElementById("bombe")) {

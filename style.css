@@ -1,3 +1,7 @@
+/* body{
+  background-color: grey;
+} */
+
 .container-fluid {
   padding: 50px;
 }
@@ -19,11 +23,11 @@
     height: 640px;
 }
 
-#plateau {
+#plateau{
+  margin: auto;
   position: relative;
 }
-
-#pion {
+#pion{
   width: 40px;
   height: 40px;
   /*background-color: blue;
@@ -32,31 +36,22 @@
   border-width: 1px;*/
   background-image: url("img/tux-anim.gif");
   background-size: contain;
+  background-position: center;
   border-radius: 50%;
   position: absolute;
   z-index: 100;
-  background-size: contain;
-  background-position: center;
-
 }
 
-#vilain {
+/* #vilain{
   width: 40px;
   height: 40px;
   position: absolute;
-  background-image: url("img/bill.png");
+  background-color: yellow;
   background-size: contain;
+  left: 0;
+  top : 0;
   z-index: 95;
-}
-
-#bug {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background-image: url("img/bug.png");
-  background-size: contain;
-  z-index: 95;
-}
+} */
 
 .title1 {
   font-size: 32px;
