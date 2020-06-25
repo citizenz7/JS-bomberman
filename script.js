@@ -18,14 +18,50 @@ var pion = document.getElementById('pion'),
 
 var vilain = document.getElementById('vilain'),
   styleVilain = vilain.style,
-  vilainX = vilain.offsetLeft,
-  vilainY = vilain.offsetTop,
+  // vilainX = vilain.offsetLeft,
+  // vilainY = vilain.offsetTop,
+  vilainX = Math.round(Math.random() * H_GRID),
+  vilainY = Math.round(Math.random() * V_GRID),
   direction = "right";
 
 var bug = document.getElementById('bug'),
   styleBug = bug.style,
-  bugX = bug.offsetLeft,
-  bugY = bug.offsetTop;
+  // bugX = vilain.offsetLeft,
+  // bugY = vilain.offsetTop,
+  bugX = Math.round(Math.random() * H_GRID),
+  bugY = Math.round(Math.random() * V_GRID);
+
+// /* ----- VILAIN 1 = bill ---- */
+// var vilain = document.createElement("div");
+// vilain.style.width = "40px",
+// vilain.style.height = "40px",
+// vilain.style.position = "absolute",
+// vilain.style.backgroundImage = "url('img/bill.png')",
+// vilain.style.backgroundRepeat = "no-repeat",
+// vilain.style.backgroundSize = "contain",
+// vilain.style.zIndex = "100",
+// vilain.id = "vilain";
+// var styleVilain = vilain.style,
+//   vilainX = Math.round(Math.random() * H_GRID),
+//   vilainY = Math.round(Math.random() * V_GRID),
+//   direction = "right";
+//   console.log(vilain);
+//
+// /* ----- VILAIN 2 = bug ---- */
+// var bug = document.createElement("div");
+// bug.style.position = "absolute";
+// bug.style.backgroundImage = "url('img/bug.png')";
+// bug.style.backgroundRepeat = "no-repeat";
+// bug.style.backgroundSize = "contain";
+// bug.style.zIndex = "100";
+// bug.id = "bug";
+// var styleBug = bug.style,
+//   bugX = Math.round(Math.random() * H_GRID),
+//   bugY = Math.round(Math.random() * V_GRID);
+//   console.log(bug);
+
+
+
 
 
 var bombe = document.createElement("div");
