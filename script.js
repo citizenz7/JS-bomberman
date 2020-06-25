@@ -6,8 +6,6 @@ const GRID_SIZE = 40;
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
-
-
 // var
 var plateau = document.getElementById('plateau');
 plateau.style.width = WINDOW_WIDTH;
@@ -24,10 +22,10 @@ var vilain = document.getElementById('vilain'),
   vilainY = vilain.offsetTop,
   direction = "right";
 
-// var bug = document.getElementById('bug'),
-//   styleBug = bug.style,
-//   bugX = bug.offsetLeft,
-//   bugY = bug.offsetTop;
+var bug = document.getElementById('bug'),
+  styleBug = bug.style,
+  bugX = bug.offsetLeft,
+  bugY = bug.offsetTop;
 
 
 var bombe = document.createElement("div");
@@ -37,7 +35,6 @@ bombe.style.position = "absolute";
 bombe.style.backgroundImage = "url('img/bomb.png')";
 bombe.style.backgroundRepeat = "no-repeat";
 bombe.style.backgroundSize = "contain";
-//bombe.style.backgroundPosition = "center";
 bombe.style.zIndex = "100";
 bombe.id = "bombe";
 bombe.explode = -1;
@@ -60,7 +57,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
-      block.traverser = false;
+      block.traverser = true;
     }
 
     else if (random100() > 88) {
@@ -286,80 +283,80 @@ window.requestAnimationFrame(loop);
 
 
 /* ----- bug = bug ----- */
-// Loop pour déplacement vilain
-// var frame2 = 0;
-//
-// function loop2() {
-//   if (frame2 === 60) {
-//     switch (direction) {
-//       // Left
-//       case "left":
-//         if (bugY > 0 && blockGrid[bugX][bugY - 1].traverser)
-//           bugY--; // ou y-=40;
-//         break;
-//         // Right
-//       case "right":
-//         if (bugX < H_GRID - 1 && blockGrid[bugX + 1][bugY].traverser)
-//           bugX++;
-//         break;
-//         // Up
-//       case "up":
-//         if (bugY < H_GRID - 1 && blockGrid[bugX][bugY + 1].traverser)
-//           bugY++;
-//         break;
-//         // Down
-//       case "down":
-//         if (bugX > 0 && blockGrid[bugX - 1][bugY].traverser)
-//           bugX--;
-//         break;
-//     }
-//
-//     styleBug.left = String(bugX * GRID_SIZE) + 'px';
-//     styleBug.top = String(bugY * GRID_SIZE) + 'px';
-//
-//     let random = random100();
-//
-//     if (random < 25) {
-//       direction = "left";
-//     }
-//
-//     if (random >= 25 && random < 50) {
-//       direction = "right";
-//     }
-//
-//     if (random >= 50 && random < 75) {
-//       direction = "up";
-//     }
-//
-//     if (random > 75) {
-//       direction = "down";
-//     }
-//
-//     frame2 = 0;
-//   }
-//
-//   frame2++;
-//
-//   //
-//   // if (bombe.explode > 0 && bombe.explode < 30) {
-//   //   document.getElementById("bombe").style.backgroundImage = "url('img/pow1.png')";
-//   // } else if (bombe.explode === 0) {
-//   //   blockGrid[bombe.x][bombe.y].traverser = true;
-//   //   document.getElementById("bombe").remove();
-//   // }
-//   //
-//   // if (bombe.explode > -1) {
-//   //   bombe.explode--;
-//   // }
-//   //
-//   window.requestAnimationFrame(loop2);
-// }
-//
-// // On crée l'animation - 60 x / seconde
-// window.requestAnimationFrame(loop2);
+//Loop pour déplacement bug
+var frame2 = 0;
+
+function loop2() {
+  if (frame2 === 60) {
+    switch (direction) {
+      // Left
+      case "left":
+        if (bugY > 0 && blockGrid[bugX][bugY - 1].traverser)
+          bugY--; // ou y-=40;
+        break;
+        // Right
+      case "right":
+        if (bugX < H_GRID - 1 && blockGrid[bugX + 1][bugY].traverser)
+          bugX++;
+        break;
+        // Up
+      case "up":
+        if (bugY < H_GRID - 1 && blockGrid[bugX][bugY + 1].traverser)
+          bugY++;
+        break;
+        // Down
+      case "down":
+        if (bugX > 0 && blockGrid[bugX - 1][bugY].traverser)
+          bugX--;
+        break;
+    }
+
+    styleBug.left = String(bugX * GRID_SIZE) + 'px';
+    styleBug.top = String(bugY * GRID_SIZE) + 'px';
+
+    let random = random100();
+
+    if (random < 25) {
+      direction = "left";
+    }
+
+    if (random >= 25 && random < 50) {
+      direction = "right";
+    }
+
+    if (random >= 50 && random < 75) {
+      direction = "up";
+    }
+
+    if (random > 75) {
+      direction = "down";
+    }
+
+    frame2 = 0;
+  }
+
+  frame2++;
+
+  //
+  // if (bombe.explode > 0 && bombe.explode < 30) {
+  //   document.getElementById("bombe").style.backgroundImage = "url('img/pow1.png')";
+  // } else if (bombe.explode === 0) {
+  //   blockGrid[bombe.x][bombe.y].traverser = true;
+  //   document.getElementById("bombe").remove();
+  // }
+  //
+  // if (bombe.explode > -1) {
+  //   bombe.explode--;
+  // }
+  //
+  window.requestAnimationFrame(loop2);
+}
+
+// On crée l'animation - 60 x / seconde
+window.requestAnimationFrame(loop2);
 
 
-// NSOD
+// BSOD
 // blockGrid[8][8].style.backgroundImage = 'url("img/bsod.png")';
 // blockGrid[8][8].style.backgroundSize = 'contain';
 

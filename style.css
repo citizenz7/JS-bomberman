@@ -9,7 +9,7 @@
     url("img/back3.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 800px;
+  height: 730px;
 }
 
 .back2 {
@@ -30,26 +30,22 @@
   border-style: double;
   border-color: grey;
   border-width: 1px;*/
-  background-image: url("img/tux-batman.png");
+  background-image: url("img/tux-anim.gif");
   background-size: contain;
   border-radius: 50%;
   position: absolute;
   z-index: 100;
   background-size: contain;
   background-position: center;
-  top: 0px;
-  left: 0px;
+
 }
 
 #vilain {
   width: 40px;
   height: 40px;
   position: absolute;
-  /*background-color: black;*/
   background-image: url("img/bill.png");
   background-size: contain;
-  left: 0;
-  top: 0;
   z-index: 95;
 }
 
@@ -57,11 +53,8 @@
   width: 40px;
   height: 40px;
   position: absolute;
-  /*background-color: black;*/
-  background-image: url("img/bug2.png");
+  background-image: url("img/bug.png");
   background-size: contain;
-  left: 0;
-  top: 0;
   z-index: 95;
 }
 
