@@ -41,7 +41,7 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.position = "absolute";
 
     // if + condition pour ne pas faire poper de wallbrick dans les 4 coins de la grille
-    if (random100() > 70 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    if (random100() > 65 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -49,7 +49,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
     }
 
-    else if (random100() > 98 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -57,7 +57,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
     }
 
-    else if (random100() > 98 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -96,7 +96,7 @@ for (var i = 0; i < 8; i++) {
   vilain.style.width = "40px";
   vilain.style.height = "40px";
   vilain.style.position = "absolute";
-  vilain.style.backgroundImage = "url('img/bug.png')";
+  vilain.style.backgroundImage = "url('img/bug2.png')";
   vilain.style.backgroundSize = "contain";
   vilain.style.backgroundRepeat = "no-repeat";
   vilain.style.left = String(vilain.vilainX * GRID_SIZE) + "px";
@@ -288,41 +288,6 @@ function disparitionBombe() {
     document.getElementById("bombe").remove();
   }
 }
-
-
-// function killVilain(x, y) { // on verifie s'il y a quelque chose dans le rayon de blast de la bombe
-//   return ((("vilain" + String(i)).y == y && (("vilain" + String(i)).x -40) <= x && x <= (("vilain" + String(i)).x + 40))
-//   || (("vilain" + String(i)).x == x && (("vilain" + String(i)).y -40) <= y && y <= (("vilain" + String(i)).y + 40)));
-// }
-
-//
-// function blastBombe() {
-//   let vilains = document.getElementById("vilain" + String(i));
-//   if(killVilain(vilain.x, vilain.y)) {
-//     document.getElementById("vilain" + String(i)).remove();
-//   }
-//   else {
-//     for (var i = 0; i < vilains.length; i++) {
-//       vilain = vilains.item(i);
-//       if (isDead(vilain.offsetLeft, vilain.offsetTop)) {
-//         document.getElementById("vilain" + String(i)).remove();
-//       }
-//     }
-//   }
-// }
-
-// function blastBombe() {
-//     for (var i = 0; i < blockGrid.length; i++) {
-//     }
-//   if (bombe.x == blockGrid[i][x] && bombe.y == blockGrid[y] && blockGrid[i][y].traverser == false) {
-//     document.getElementById("vilain" + String(i)).remove();
-//     //blockGrid.splice(blockGrid.indexOf(blockGrid[i], 1));
-//   }
-// }
-//     // blockGrid[bombe.x][bombe.y].traverser = false;
-//     // document.getElementById("bombe").remove();
-// }
-
 
 
 /* ----- SPRITESHEET ----- */

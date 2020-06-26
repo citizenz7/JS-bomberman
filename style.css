@@ -65,6 +65,7 @@
 }
 
 .characters {
-  max-width: 40px;
+
+  max-height: 30px;
   margin-bottom: 20px;
 }
