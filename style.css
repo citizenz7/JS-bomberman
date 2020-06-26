@@ -27,19 +27,26 @@
   margin: auto;
   position: relative;
 }
-#pion{
+
+/* #pion{
   width: 40px;
   height: 40px;
-  /*background-color: blue;
-  border-style: double;
-  border-color: grey;
-  border-width: 1px;*/
   background-image: url("img/tux-anim.gif");
   background-size: contain;
   background-position: center;
   border-radius: 50%;
   position: absolute;
   z-index: 100;
+} */
+
+#pion{
+  width: 40px;
+  height: 40px;
+  background-image: url("img/spritesheet.png");
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
 }
 
 /* #vilain{

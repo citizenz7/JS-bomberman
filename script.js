@@ -1,6 +1,11 @@
+// Horizontal
 const H_GRID = 16;
+// vertical
 const V_GRID = 16;
+// carreau de 40px
 const GRID_SIZE = 40;
+
+
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
@@ -35,7 +40,8 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.display = "flex";
     block.style.position = "absolute";
 
-    if (random100() > 70) {
+    // if + condition pour ne pas faire poper de wallbrick dans les 4 coins de la grille
+    if (random100() > 70 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -43,7 +49,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
     }
 
-    else if (random100() > 98) {
+    else if (random100() > 98 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -51,7 +57,7 @@ for (var i = 0; i < H_GRID; i++) {
       block.traverser = false;
     }
 
-    else if (random100() > 97) {
+    else if (random100() > 98 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
@@ -75,10 +81,10 @@ for (var i = 0; i < H_GRID; i++) {
 var vilainListe = []
 for (var i = 0; i < 8; i++) {
   let vilain = document.createElement('div');
-
   let x = 0;
   let y = 0;
   while (!blockGrid[x][y].traverser || (x === 0 && y === 0)) {
+
     x = Math.floor(Math.random() * (H_GRID))
     y = Math.floor(Math.random() * (V_GRID))
   }
@@ -126,7 +132,6 @@ function loop() {
           break;
 
         case "up":
-          console.log(vilainY)
           if (vilainY < V_GRID - 1 && blockGrid[vilainX][vilainY + 1].traverser)
 
             vilainY++;
@@ -170,7 +175,9 @@ function loop() {
 
   if (bombe.explode > 0 && bombe.explode < 50) {
     document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
-  } else if (bombe.explode === 0) {
+  }
+
+  else if (bombe.explode === 0) {
     blockGrid[bombe.x][bombe.y].traverser = true;
     document.getElementById("bombe").remove();
   }
@@ -194,27 +201,31 @@ document.onkeydown = function(event) {
     case 38:
       if (y > 0 && blockGrid[x][y - 1].traverser)
         y--; // ou y-=40;
+        startAnimationhaut();
       break;
-    // Right
+      // Right
     case 39:
       if (x < H_GRID - 1 && blockGrid[x + 1][y].traverser)
         x++;
+        startAnimationdroite();
       break;
-    // Down
+      // Down
     case 40:
       if (y < H_GRID - 1 && blockGrid[x][y + 1].traverser)
         y++;
+        startAnimationbas();
       break;
-    // Left
+      // Left
     case 37:
       if (x > 0 && blockGrid[x - 1][y].traverser)
         x--;
+        startAnimationgauche();
       break;
-    // Space bar
+      // Space bar
     case 32:
       createBomb();
       break;
-    // default
+      // default
     default:
       return;
 
@@ -233,7 +244,6 @@ function random100() {
 
 function createBomb() {
   if (!document.getElementById("bombe")) {
-
     bombe = document.createElement("div");
     bombe.style.width = GRID_SIZE + "px";
     bombe.style.height = GRID_SIZE + "px";
@@ -241,10 +251,8 @@ function createBomb() {
     bombe.style.backgroundImage = "url('img/bomb.png')";
     bombe.style.backgroundRepeat = "no-repeat";
     bombe.style.backgroundSize = "contain";
-    //bombe.style.backgroundPosition = "center";
     bombe.style.zIndex = "100";
     bombe.id = "bombe";
-
     bombe.style.left = String(x * GRID_SIZE) + "px";
     bombe.style.top = String(y * GRID_SIZE) + "px";
 
@@ -270,6 +278,7 @@ function explosionBombe() {
   }
 
   setTimeout(disparitionBombe, 1500);
+
 }
 
 
@@ -278,4 +287,130 @@ function disparitionBombe() {
     blockGrid[bombe.x][bombe.y].traverser = true;
     document.getElementById("bombe").remove();
   }
+}
+
+
+// function killVilain(x, y) { // on verifie s'il y a quelque chose dans le rayon de blast de la bombe
+//   return ((("vilain" + String(i)).y == y && (("vilain" + String(i)).x -40) <= x && x <= (("vilain" + String(i)).x + 40))
+//   || (("vilain" + String(i)).x == x && (("vilain" + String(i)).y -40) <= y && y <= (("vilain" + String(i)).y + 40)));
+// }
+
+//
+// function blastBombe() {
+//   let vilains = document.getElementById("vilain" + String(i));
+//   if(killVilain(vilain.x, vilain.y)) {
+//     document.getElementById("vilain" + String(i)).remove();
+//   }
+//   else {
+//     for (var i = 0; i < vilains.length; i++) {
+//       vilain = vilains.item(i);
+//       if (isDead(vilain.offsetLeft, vilain.offsetTop)) {
+//         document.getElementById("vilain" + String(i)).remove();
+//       }
+//     }
+//   }
+// }
+
+// function blastBombe() {
+//     for (var i = 0; i < blockGrid.length; i++) {
+//     }
+//   if (bombe.x == blockGrid[i][x] && bombe.y == blockGrid[y] && blockGrid[i][y].traverser == false) {
+//     document.getElementById("vilain" + String(i)).remove();
+//     //blockGrid.splice(blockGrid.indexOf(blockGrid[i], 1));
+//   }
+// }
+//     // blockGrid[bombe.x][bombe.y].traverser = false;
+//     // document.getElementById("bombe").remove();
+// }
+
+
+
+/* ----- SPRITESHEET ----- */
+var animationInterval;
+var spriteSheet = document.getElementById("pion");
+var widthOfSpriteSheet = 160;
+var widthOfEachSprite = 40;
+var heightOfSpriteSheet = 160;
+var heightOfEachSprite = 40;
+
+function stopAnimation() {
+  clearInterval(animationInterval);
+}
+
+function startAnimationbas() {
+  stopAnimation();
+  var position = widthOfEachSprite; //start position for the image
+  const speed = 110; //in millisecond(ms)
+  const diff = widthOfEachSprite; //difference between two sprites
+
+  animationInterval = setInterval(() => {
+    spriteSheet.style.backgroundPosition = `-${position}px 0px`;
+
+    if (position < widthOfSpriteSheet) {
+      position = position + diff;
+    } else {
+      //increment the position by the width of each sprite each time
+      position = widthOfEachSprite;
+    }
+    //reset the position to show first sprite after the last one
+  }, speed);
+}
+
+
+function startAnimationhaut() {
+  stopAnimation();
+  var position = widthOfEachSprite; //start position for the image
+  const speed = 110; //in millisecond(ms)
+  const diff = widthOfEachSprite; //difference between two sprites
+
+  animationInterval = setInterval(() => {
+    spriteSheet.style.backgroundPosition = `-${position}px 40px`;
+
+    if (position < widthOfSpriteSheet) {
+      position = position + diff;
+    } else {
+      //increment the position by the width of each sprite each time
+      position = widthOfEachSprite;
+    }
+    //reset the position to show first sprite after the last one
+  }, speed);
+}
+
+
+function startAnimationgauche() {
+  stopAnimation();
+  var position = widthOfEachSprite; //start position for the image
+  const speed = 110; //in millisecond(ms)
+  const diff = widthOfEachSprite; //difference between two sprites
+
+  animationInterval = setInterval(() => {
+    spriteSheet.style.backgroundPosition = `-${position}px 80px`;
+
+    if (position < widthOfSpriteSheet) {
+      position = position + diff;
+    } else {
+      //increment the position by the width of each sprite each time
+      position = widthOfEachSprite;
+    }
+    //reset the position to show first sprite after the last one
+  }, speed);
+}
+
+function startAnimationdroite() {
+  stopAnimation();
+  var position = widthOfEachSprite; //start position for the image
+  const speed = 110; //in millisecond(ms)
+  const diff = widthOfEachSprite; //difference between two sprites
+
+  animationInterval = setInterval(() => {
+    spriteSheet.style.backgroundPosition = `-${position}px 120px`;
+
+    if (position < widthOfSpriteSheet) {
+      position = position + diff;
+    } else {
+      //increment the position by the width of each sprite each time
+      position = widthOfEachSprite;
+    }
+    //reset the position to show first sprite after the last one
+  }, speed);
 }
