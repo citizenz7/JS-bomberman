@@ -78,7 +78,10 @@ for (var i = 0; i < H_GRID; i++) {
   }
 }
 
-var vilainListe = []
+// tableau des vilains
+var vilainList = []
+
+// on crée 8 vilains, c'est à diren 8 x div vilain
 for (var i = 0; i < 8; i++) {
   let vilain = document.createElement('div');
   let x = 0;
@@ -104,7 +107,7 @@ for (var i = 0; i < 8; i++) {
   vilain.style.zIndex = "95";
   plateau.appendChild(vilain);
 
-  vilainListe.push(vilain)
+  vilainList.push(vilain)
 }
 
 //blockGrid[10][10].style.backgroundColor = "blue";
@@ -113,8 +116,8 @@ var frame = 0;
 
 function loop() {
   if (frame === 60) {
-    for (var i = 0; i < vilainListe.length; i++) {
-      let vilain = vilainListe[i];
+    for (var i = 0; i < vilainList.length; i++) {
+      let vilain = vilainList[i];
       let vilainX = vilain.vilainX
       let vilainY = vilain.vilainY
       let direction = vilain.direction
@@ -163,9 +166,9 @@ function loop() {
         direction = "down";
       }
 
-      vilain.vilainX = vilainX
-      vilain.vilainY = vilainY
-      vilain.direction = direction
+      vilain.vilainX = vilainX;
+      vilain.vilainY = vilainY;
+      vilain.direction = direction;
       blockGrid[vilainX][vilainY].traverser = false;
     }
 
@@ -173,18 +176,18 @@ function loop() {
   }
   frame++;
 
-  if (bombe.explode > 0 && bombe.explode < 50) {
-    document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
-  }
-
-  else if (bombe.explode === 0) {
-    blockGrid[bombe.x][bombe.y].traverser = true;
-    document.getElementById("bombe").remove();
-  }
-
-  if (bombe.explode > -1) {
-    bombe.explode--;
-  }
+  // if (bombe.explode > 0 && bombe.explode < 50) {
+  //   document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
+  // }
+  //
+  // else if (bombe.explode === 0) {
+  //   blockGrid[bombe.x][bombe.y].traverser = true;
+  //   document.getElementById("bombe").remove();
+  // }
+  //
+  // if (bombe.explode > -1) {
+  //   bombe.explode--;
+  // }
 
   window.requestAnimationFrame(loop);
 
@@ -234,13 +237,16 @@ document.onkeydown = function(event) {
   stylePion.top = String(y * GRID_SIZE) + 'px';
 }
 
-function randomColor() {
-  return "#" + ((1 << 24) * Math.random() | 0).toString(16);
-}
+// function randomColor() {
+//   return "#" + ((1 << 24) * Math.random() | 0).toString(16);
+// }
 
 function random100() {
   return Math.floor(Math.random() * 100);
 }
+
+/* ----- Creation de la bombe ----- */
+var bombeList = [];
 
 function createBomb() {
   if (!document.getElementById("bombe")) {
@@ -265,9 +271,13 @@ function createBomb() {
 
     document.getElementById("plateau").appendChild(bombe);
 
+    bombeList.push(bombe);
+    //console.log(bombe.x, bombe.y);
+
     //setTimeout(disparitionBombe, 1500);
     // la bombe explose après 2 secondes
-    bombe.explode = 120;
+    // bombe.explode = 120;
+    setTimeout(explosionBombe, 2000);
   }
 }
 
@@ -277,17 +287,105 @@ function explosionBombe() {
     document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
   }
 
-  setTimeout(disparitionBombe, 1500);
+  setTimeout(disparitionBombe, 1000);
+  setTimeout(vilainKill, 1000);
 
 }
 
 
+// function disparitionBombe() {
+//   blockGrid[bombe.x][bombe.y].traverser = false;
+//   for (var i = 0; i < bombeList.length; i++) {
+//     console.log(bombe.x, bombe.y);
+//     if (blockGrid[bombe.x][bombe.y - 1].traverser) {
+//       blockGrid[bombe.x][bombe.y - 1].remove();
+//       document.getElementById("bombe").remove();
+//       blockGrid[bombe.x][bombe.y].traverser = true;
+//     }
+//   }
+// }
 function disparitionBombe() {
-  if (document.getElementById("bombe")) {
-    blockGrid[bombe.x][bombe.y].traverser = true;
-    document.getElementById("bombe").remove();
+
+  let bx = bombe.x, by = bombe.y;
+  blockGrid[bx][by].traverser = false;
+
+  // Bombe
+  for (var i = 0; i < bombeList.length; i++) {
+    if (!(blockGrid[bx][by - 1].traverser)) {
+      blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
+      blockGrid[bx][by - 1].traverser = true;
+    }
+    if (!(blockGrid[bx][by + 1].traverser)) {
+      blockGrid[bx][by + 1].style.backgroundImage = 'url("img/grass2.png")';
+      blockGrid[bx][by + 1].traverser = true;
+    }
+    if (!(blockGrid[bx - 1][by].traverser)) {
+      blockGrid[bx - 1][by].style.backgroundImage = 'url("img/grass2.png")';
+      blockGrid[bx - 1][by].traverser = true;
+    }
+    if (!(blockGrid[bx + 1][by].traverser)) {
+      blockGrid[bx + 1][by].style.backgroundImage = 'url("img/grass2.png")';
+      blockGrid[bx + 1][by].traverser = true;
+    }
+  }
+
+  document.getElementById("bombe").remove();
+  blockGrid[bx][by].traverser = true;
+
+  // document.getElementById("vilain" + String(i)).remove();
+  // blockGrid[vx][vy].traverser = true;
+
+}
+
+
+function vilainKill() {
+
+  // Vilain
+  for (var i = 0; i < vilainList.length; i++) {
+
+    if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) + GRID_SIZE == vilainList[i].offsetTop) {
+      console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+      vilainList[i].remove();
+      vilainList[i].traverser = true;
+    }
+    // if (!(vilainList[bx][by - 1].traverser)) {
+    //   vilainList[bx][by - 1].remove();
+    //   vilainList[bx][by - 1].traverser = true;
+    // }
+    // if (!(vilainList[bx][by + 1].traverser)) {
+    //   vilainList[bx][by + 1].remove();
+    //   vilainList[bx][by + 1].traverser = true;
+    // }
+    // if (!(vilainList[bx - 1][by].traverser)) {
+    //   vilainList[bx - 1][by].remove();
+    //   vilainList[bx - 1][by].traverser = true;
+    // }
+    // if (!(vilainList[bx + 1][by].traverser)) {
+    //   vilainList[bx + 1][by].remove();
+    //   vilainList[bx + 1][by].traverser = true;
+    // }
   }
 }
+
+
+// /* ----- Destruction mur + vilain ----- */
+// function BombeBlast() {
+//
+//   // si la bombe existe, on récupère sa position et l'ID du vilain
+//   if (document.getElementById("bombe")) {
+//     //let positionBombe = blockGrid[bombe.x][bombe.y];
+//     //var positionVilain = blockGrid[vilainX][vilainY];
+//     if(bombe.x == blockGrid[bombe.x] && bombe.y == blockGrid[bombe.y]) {
+//           blockGrid[bombe.x][bombe.y].remove();
+//           console.log("blast");
+//     }
+//
+//
+//     // si le vilain est dans la zone de la bombe, on détruit le carreau de la bombe + 1 carreau tout autour
+//     // if (positionBombe == positionVilain) {
+//     //   document.getElementById("vilain" + String(i)).remove();
+//     // }
+//   }
 
 
 /* ----- SPRITESHEET ----- */
