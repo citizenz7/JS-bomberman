@@ -41,31 +41,25 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.position = "absolute";
 
     // if + condition pour ne pas faire poper de wallbrick dans les 4 coins de la grille
-    if (random100() > 65 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    if (random100() > 65 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    }
-
-    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    } else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    }
-
-    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2)  && i < H_GRID && j >= 0 && j <= 1 || i >= 0  && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2)  && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    } else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    }
-
-    else {
+    } else {
       block.style.backgroundImage = 'url("img/grass2.png")';
       block.traverser = true;
     }
@@ -204,25 +198,25 @@ document.onkeydown = function(event) {
     case 38:
       if (y > 0 && blockGrid[x][y - 1].traverser)
         y--; // ou y-=40;
-        startAnimationhaut();
+      startAnimationhaut();
       break;
       // Right
     case 39:
       if (x < H_GRID - 1 && blockGrid[x + 1][y].traverser)
         x++;
-        startAnimationdroite();
+      startAnimationdroite();
       break;
       // Down
     case 40:
       if (y < H_GRID - 1 && blockGrid[x][y + 1].traverser)
         y++;
-        startAnimationbas();
+      startAnimationbas();
       break;
       // Left
     case 37:
       if (x > 0 && blockGrid[x - 1][y].traverser)
         x--;
-        startAnimationgauche();
+      startAnimationgauche();
       break;
       // Space bar
     case 32:
@@ -288,7 +282,7 @@ function explosionBombe() {
   }
 
   setTimeout(disparitionBombe, 1000);
-  setTimeout(vilainKill, 1000);
+  setTimeout(kill, 1000);
 
 }
 
@@ -306,7 +300,8 @@ function explosionBombe() {
 // }
 function disparitionBombe() {
 
-  let bx = bombe.x, by = bombe.y;
+  let bx = bombe.x,
+    by = bombe.y;
   blockGrid[bx][by].traverser = false;
 
   // Bombe
@@ -338,9 +333,9 @@ function disparitionBombe() {
 }
 
 
-function vilainKill() {
+function kill() {
 
-  // Vilain
+  // Vilains
   for (var i = 0; i < vilainList.length; i++) {
 
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) - GRID_SIZE == vilainList[i].offsetTop) {
@@ -367,23 +362,42 @@ function vilainKill() {
       vilainList[i].traverser = true;
     }
 
-    // if (!(vilainList[bx][by - 1].traverser)) {
-    //   vilainList[bx][by - 1].remove();
-    //   vilainList[bx][by - 1].traverser = true;
-    // }
-    // if (!(vilainList[bx][by + 1].traverser)) {
-    //   vilainList[bx][by + 1].remove();
-    //   vilainList[bx][by + 1].traverser = true;
-    // }
-    // if (!(vilainList[bx - 1][by].traverser)) {
-    //   vilainList[bx - 1][by].remove();
-    //   vilainList[bx - 1][by].traverser = true;
-    // }
-    // if (!(vilainList[bx + 1][by].traverser)) {
-    //   vilainList[bx + 1][by].remove();
-    //   vilainList[bx + 1][by].traverser = true;
-    // }
+
   }
+
+  // Pion
+  for (var i = 0; i < GRID_SIZE; i++) {
+    console.log(stylePion.left, stylePion.top);
+
+    // Top
+    if (parseInt(bombe.style.left) == parseInt(stylePion.left) && parseInt(bombe.style.top) - GRID_SIZE == parseInt(stylePion.top)) {
+      document.getElementById('pion').remove();
+      alert("Perdu !");
+      break;
+    }
+
+    if (parseInt(bombe.style.left) - GRID_SIZE == parseInt(stylePion.left) && parseInt(bombe.style.top) == parseInt(stylePion.top)) {
+      document.getElementById('pion').remove();
+      alert("Perdu !");
+      break;
+    }
+
+    if (parseInt(bombe.style.left) + GRID_SIZE == parseInt(stylePion.left) && parseInt(bombe.style.top) == parseInt(stylePion.top)) {
+      document.getElementById('pion').remove();
+      alert("Perdu !");
+      break;
+    }
+
+    if (parseInt(bombe.style.left) == parseInt(stylePion.left) && parseInt(bombe.style.top) + GRID_SIZE == parseInt(stylePion.top)) {
+      document.getElementById('pion').remove();
+      alert("Perdu !");
+      break;
+    }
+
+    //stylePion.left = String(x * GRID_SIZE) + 'px';
+    //stylePion.top = String(y * GRID_SIZE) + 'px';
+  }
+
 }
 
 
