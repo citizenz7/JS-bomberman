@@ -343,11 +343,30 @@ function vilainKill() {
   // Vilain
   for (var i = 0; i < vilainList.length; i++) {
 
-    if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) + GRID_SIZE == vilainList[i].offsetTop) {
-      console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+    if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) - GRID_SIZE == vilainList[i].offsetTop) {
+      //console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
       vilainList[i].remove();
       vilainList[i].traverser = true;
     }
+
+    if (parseInt(bombe.style.left) - GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
+      //.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+      vilainList[i].remove();
+      vilainList[i].traverser = true;
+    }
+
+    if (parseInt(bombe.style.left) + GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
+      //.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+      vilainList[i].remove();
+      vilainList[i].traverser = true;
+    }
+
+    if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) + GRID_SIZE == vilainList[i].offsetTop) {
+      //console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+      vilainList[i].remove();
+      vilainList[i].traverser = true;
+    }
+
     // if (!(vilainList[bx][by - 1].traverser)) {
     //   vilainList[bx][by - 1].remove();
     //   vilainList[bx][by - 1].traverser = true;
