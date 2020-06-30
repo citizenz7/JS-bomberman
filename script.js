@@ -300,27 +300,52 @@ function explosionBombe() {
 // }
 function disparitionBombe() {
 
-  let bx = bombe.x,
-    by = bombe.y;
+  let bx = bombe.x;
+  let by = bombe.y;
+
   blockGrid[bx][by].traverser = false;
 
   // Bombe
   for (var i = 0; i < bombeList.length; i++) {
-    if (!(blockGrid[bx][by - 1].traverser)) {
-      blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
-      blockGrid[bx][by - 1].traverser = true;
+
+    console.log(bx, by);
+    console.log(V_GRID, H_GRID);
+
+    // if (bx >= 0) continue;
+    // if (by >= 0) continue;
+    // if (bx <= H_GRID) continue;
+    // if (by <= V_GRID) continue;
+
+    // Haut
+    if (by > 0) {
+      if (!(blockGrid[bx][by - 1].traverser)) {
+        blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
+        blockGrid[bx][by - 1].traverser = true;
+      }
     }
-    if (!(blockGrid[bx][by + 1].traverser)) {
-      blockGrid[bx][by + 1].style.backgroundImage = 'url("img/grass2.png")';
-      blockGrid[bx][by + 1].traverser = true;
+
+    // Bas
+    if (by < V_GRID - 1) {
+      if (!(blockGrid[bx][by + 1].traverser)) {
+        blockGrid[bx][by + 1].style.backgroundImage = 'url("img/grass2.png")';
+        blockGrid[bx][by + 1].traverser = true;
+      }
     }
-    if (!(blockGrid[bx - 1][by].traverser)) {
-      blockGrid[bx - 1][by].style.backgroundImage = 'url("img/grass2.png")';
-      blockGrid[bx - 1][by].traverser = true;
+
+    // Gauche
+    if (bx > 0) {
+      if (!(blockGrid[bx - 1][by].traverser)) {
+        blockGrid[bx - 1][by].style.backgroundImage = 'url("img/grass2.png")';
+        blockGrid[bx - 1][by].traverser = true;
+      }
     }
-    if (!(blockGrid[bx + 1][by].traverser)) {
-      blockGrid[bx + 1][by].style.backgroundImage = 'url("img/grass2.png")';
-      blockGrid[bx + 1][by].traverser = true;
+
+    // Droite
+    if (bx < H_GRID - 1) {
+      if (!(blockGrid[bx + 1][by].traverser)) {
+        blockGrid[bx + 1][by].style.backgroundImage = 'url("img/grass2.png")';
+        blockGrid[bx + 1][by].traverser = true;
+      }
     }
   }
 
@@ -367,30 +392,34 @@ function kill() {
 
   // Pion
   for (var i = 0; i < GRID_SIZE; i++) {
-    console.log(stylePion.left, stylePion.top);
+    //console.log(stylePion.left, stylePion.top);
 
     // Top
     if (parseInt(bombe.style.left) == parseInt(stylePion.left) && parseInt(bombe.style.top) - GRID_SIZE == parseInt(stylePion.top)) {
       document.getElementById('pion').remove();
-      alert("Perdu !");
+      alert("Perdu ! Recommencer...");
+      document.location.reload(true);
       break;
     }
 
     if (parseInt(bombe.style.left) - GRID_SIZE == parseInt(stylePion.left) && parseInt(bombe.style.top) == parseInt(stylePion.top)) {
       document.getElementById('pion').remove();
-      alert("Perdu !");
+      alert("Perdu ! Recommencer...");
+      document.location.reload(true);
       break;
     }
 
     if (parseInt(bombe.style.left) + GRID_SIZE == parseInt(stylePion.left) && parseInt(bombe.style.top) == parseInt(stylePion.top)) {
       document.getElementById('pion').remove();
-      alert("Perdu !");
+      alert("Perdu ! Recommencer...");
+      document.location.reload(true);
       break;
     }
 
     if (parseInt(bombe.style.left) == parseInt(stylePion.left) && parseInt(bombe.style.top) + GRID_SIZE == parseInt(stylePion.top)) {
       document.getElementById('pion').remove();
-      alert("Perdu !");
+      alert("Perdu ! Recommencer...");
+      document.location.reload(true);
       break;
     }
 
