@@ -85,7 +85,7 @@ for (var i = 0; i < 8; i++) {
     x = Math.floor(Math.random() * (H_GRID))
     y = Math.floor(Math.random() * (V_GRID))
   }
-  blockGrid[x][y].traverser = false;
+  blockGrid[x][y].traverser = true;
   vilain.vilainX = x;
   vilain.vilainY = y;
   vilain.direction = "right";
@@ -116,6 +116,8 @@ function loop() {
       let vilainY = vilain.vilainY
       let direction = vilain.direction
       blockGrid[vilainX][vilainY].traverser = true;
+      //vilain.traverser = true;
+
       switch (direction) {
         case "left":
           if (vilainY > 0 && blockGrid[vilainX][vilainY - 1].traverser)
@@ -139,8 +141,19 @@ function loop() {
             vilainX--;
           break;
       }
+
+      // Pion meurt si vilain va sur lui
+        if (pion.offsetLeft == vilainX * GRID_SIZE && pion.offsetTop == vilainY * GRID_SIZE) {
+          console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+          document.getElementById('pion').remove();
+          alert("Perdu ! Recommencer...");
+          document.location.reload(true);
+          break;
+        }
+
       vilain.style.left = String(vilainX * GRID_SIZE) + 'px';
       vilain.style.top = String(vilainY * GRID_SIZE) + 'px';
+
 
       let random = random100();
 
@@ -163,7 +176,8 @@ function loop() {
       vilain.vilainX = vilainX;
       vilain.vilainY = vilainY;
       vilain.direction = direction;
-      blockGrid[vilainX][vilainY].traverser = false;
+
+      //blockGrid[vilainX][vilainY].traverser = true;
     }
 
     frame = 0;
@@ -227,6 +241,18 @@ document.onkeydown = function(event) {
       return;
 
   }
+
+  // Pion meurt si il va sur vilain
+  for (var i = 0; i < vilainList.length; i++) {
+    if (x * GRID_SIZE == vilainList[i].offsetLeft && y * GRID_SIZE == vilainList[i].offsetTop) {
+      console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+      document.getElementById('pion').remove();
+      alert("Perdu ! Recommencer...");
+      document.location.reload(true);
+      break;
+    }
+  }
+
   stylePion.left = String(x * GRID_SIZE) + 'px';
   stylePion.top = String(y * GRID_SIZE) + 'px';
 }
@@ -360,7 +386,7 @@ function disparitionBombe() {
 
 function kill() {
 
-  // Vilains
+  // Les vilains sont détruits par la bombe
   for (var i = 0; i < vilainList.length; i++) {
 
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) - GRID_SIZE == vilainList[i].offsetTop) {
@@ -387,10 +413,9 @@ function kill() {
       vilainList[i].traverser = true;
     }
 
-
   }
 
-  // Pion
+  // Le pion (joueur) est détruit par la bombe
   for (var i = 0; i < GRID_SIZE; i++) {
     //console.log(stylePion.left, stylePion.top);
 
@@ -423,11 +448,11 @@ function kill() {
       break;
     }
 
-    //stylePion.left = String(x * GRID_SIZE) + 'px';
-    //stylePion.top = String(y * GRID_SIZE) + 'px';
   }
 
 }
+
+
 
 
 // /* ----- Destruction mur + vilain ----- */
