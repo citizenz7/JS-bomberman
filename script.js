@@ -29,7 +29,7 @@ bombe.style.zIndex = "100";
 bombe.id = "bombe";
 bombe.explode = -1;
 
-
+// On crée la grille
 var blockGrid = [];
 for (var i = 0; i < H_GRID; i++) {
   blockGrid.push([]);
@@ -40,26 +40,36 @@ for (var i = 0; i < H_GRID; i++) {
     block.style.display = "flex";
     block.style.position = "absolute";
 
+    // Murs de briques
     // if + condition pour ne pas faire poper de wallbrick dans les 4 coins de la grille
-    if (random100() > 65 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    if (random100() > 60 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/wallbrick.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    } else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    }
+
+    // Blue screens of death
+    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    } else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    }
+
+    // Stallman
+    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
       block.traverser = false;
-    } else {
+    }
+
+    // Herbe = sol par défaut
+    else {
       block.style.backgroundImage = 'url("img/grass2.png")';
       block.traverser = true;
     }
@@ -104,7 +114,6 @@ for (var i = 0; i < 8; i++) {
   vilainList.push(vilain)
 }
 
-//blockGrid[10][10].style.backgroundColor = "blue";
 
 var frame = 0;
 
@@ -144,7 +153,7 @@ function loop() {
 
       // Pion meurt si vilain va sur lui
         if (pion.offsetLeft == vilainX * GRID_SIZE && pion.offsetTop == vilainY * GRID_SIZE) {
-          console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+          //console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
           document.getElementById('pion').remove();
           alert("Perdu ! Recommencer...");
           document.location.reload(true);
@@ -183,19 +192,6 @@ function loop() {
     frame = 0;
   }
   frame++;
-
-  // if (bombe.explode > 0 && bombe.explode < 50) {
-  //   document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
-  // }
-  //
-  // else if (bombe.explode === 0) {
-  //   blockGrid[bombe.x][bombe.y].traverser = true;
-  //   document.getElementById("bombe").remove();
-  // }
-  //
-  // if (bombe.explode > -1) {
-  //   bombe.explode--;
-  // }
 
   window.requestAnimationFrame(loop);
 
@@ -245,7 +241,7 @@ document.onkeydown = function(event) {
   // Pion meurt si il va sur vilain
   for (var i = 0; i < vilainList.length; i++) {
     if (x * GRID_SIZE == vilainList[i].offsetLeft && y * GRID_SIZE == vilainList[i].offsetTop) {
-      console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
+      //console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
       document.getElementById('pion').remove();
       alert("Perdu ! Recommencer...");
       document.location.reload(true);
@@ -313,17 +309,6 @@ function explosionBombe() {
 }
 
 
-// function disparitionBombe() {
-//   blockGrid[bombe.x][bombe.y].traverser = false;
-//   for (var i = 0; i < bombeList.length; i++) {
-//     console.log(bombe.x, bombe.y);
-//     if (blockGrid[bombe.x][bombe.y - 1].traverser) {
-//       blockGrid[bombe.x][bombe.y - 1].remove();
-//       document.getElementById("bombe").remove();
-//       blockGrid[bombe.x][bombe.y].traverser = true;
-//     }
-//   }
-// }
 function disparitionBombe() {
 
   let bx = bombe.x;
@@ -334,13 +319,8 @@ function disparitionBombe() {
   // Bombe
   for (var i = 0; i < bombeList.length; i++) {
 
-    console.log(bx, by);
-    console.log(V_GRID, H_GRID);
-
-    // if (bx >= 0) continue;
-    // if (by >= 0) continue;
-    // if (bx <= H_GRID) continue;
-    // if (by <= V_GRID) continue;
+    //console.log(bx, by);
+    //console.log(V_GRID, H_GRID);
 
     // Haut
     if (by > 0) {
@@ -378,9 +358,6 @@ function disparitionBombe() {
   document.getElementById("bombe").remove();
   blockGrid[bx][by].traverser = true;
 
-  // document.getElementById("vilain" + String(i)).remove();
-  // blockGrid[vx][vy].traverser = true;
-
 }
 
 
@@ -391,26 +368,58 @@ function kill() {
 
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) - GRID_SIZE == vilainList[i].offsetTop) {
       //console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
-      vilainList[i].remove();
       vilainList[i].traverser = true;
+      vilainList[i].remove();
+      vilainList.splice(i, 1);
+
+      if (vilainList.length == 0) {
+        alert("Gagné !");
+        document.location.reload(true);
+        return;
+      }
+
     }
 
     if (parseInt(bombe.style.left) - GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
       //.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
-      vilainList[i].remove();
       vilainList[i].traverser = true;
+      vilainList[i].remove();
+      vilainList.splice(i, 1);
+
+      if (vilainList.length == 0) {
+        alert("Gagné !");
+        document.location.reload(true);
+        return;
+      }
+
     }
 
     if (parseInt(bombe.style.left) + GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
       //.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
-      vilainList[i].remove();
       vilainList[i].traverser = true;
+      vilainList[i].remove();
+      vilainList.splice(i, 1);
+
+      if (vilainList.length == 0) {
+        alert("Gagné !");
+        document.location.reload(true);
+        return;
+      }
+
     }
 
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) + GRID_SIZE == vilainList[i].offsetTop) {
       //console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
-      vilainList[i].remove();
       vilainList[i].traverser = true;
+      vilainList[i].remove();
+      vilainList.splice(i, 1);
+
+      if (vilainList.length == 0) {
+        alert("Gagné !");
+        document.location.reload(true);
+        return;
+      }
+
     }
 
   }
@@ -453,28 +462,6 @@ function kill() {
 }
 
 
-
-
-// /* ----- Destruction mur + vilain ----- */
-// function BombeBlast() {
-//
-//   // si la bombe existe, on récupère sa position et l'ID du vilain
-//   if (document.getElementById("bombe")) {
-//     //let positionBombe = blockGrid[bombe.x][bombe.y];
-//     //var positionVilain = blockGrid[vilainX][vilainY];
-//     if(bombe.x == blockGrid[bombe.x] && bombe.y == blockGrid[bombe.y]) {
-//           blockGrid[bombe.x][bombe.y].remove();
-//           console.log("blast");
-//     }
-//
-//
-//     // si le vilain est dans la zone de la bombe, on détruit le carreau de la bombe + 1 carreau tout autour
-//     // if (positionBombe == positionVilain) {
-//     //   document.getElementById("vilain" + String(i)).remove();
-//     // }
-//   }
-
-
 /* ----- SPRITESHEET ----- */
 var animationInterval;
 var spriteSheet = document.getElementById("pion");
@@ -506,7 +493,6 @@ function startAnimationbas() {
   }, speed);
 }
 
-
 function startAnimationhaut() {
   stopAnimation();
   var position = widthOfEachSprite; //start position for the image
@@ -525,7 +511,6 @@ function startAnimationhaut() {
     //reset the position to show first sprite after the last one
   }, speed);
 }
-
 
 function startAnimationgauche() {
   stopAnimation();
