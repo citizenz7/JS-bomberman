@@ -5,9 +5,11 @@ const V_GRID = 16;
 // carreau de 40px
 const GRID_SIZE = 40;
 
-
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
+
+const bsodPoint = 2;
+const stallmanPoint = 4;
 
 var score = 0;
 
@@ -327,10 +329,10 @@ function disparitionBombe() {
     //console.log(V_GRID, H_GRID);
 
     // Haut
-    if (by > 1) {
+    if (by > 0) {
       if (!(blockGrid[bx][by - 1].traverser)) {
-        if (blockGrid[bx][by - 1].classList.contains("bsod")) score += 2;
-        if (blockGrid[bx][by - 1].classList.contains("stallman")) score += 3;
+        if (blockGrid[bx][by - 1].classList.contains("bsod")) score += bsodPoint;
+        if (blockGrid[bx][by - 1].classList.contains("stallman")) score += stallmanPoint;
         blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx][by - 1].traverser = true;
       }
@@ -347,7 +349,7 @@ function disparitionBombe() {
     }
 
     // Gauche
-    if (bx > 1) {
+    if (bx > 0) {
       if (!(blockGrid[bx - 1][by].traverser)) {
         if (blockGrid[bx - 1][by].classList.contains("bsod")) score += 2;
         if (blockGrid[bx - 1][by].classList.contains("stallman")) score += 3;
