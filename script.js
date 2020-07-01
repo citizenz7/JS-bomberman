@@ -383,14 +383,14 @@ function kill() {
   // Les vilains sont détruits par la bombe
   for (var i = 0; i < vilainList.length; i++) {
 
+    //console.log(vilainList[i]);
+
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) - GRID_SIZE == vilainList[i].offsetTop) {
-      //console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
       vilainList[i].traverser = true;
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
       score++;
-      drawScore();
 
       if (vilainList.length == 0) {
         alert("Gagné ! Score " + score);
@@ -401,13 +401,11 @@ function kill() {
     }
 
     if (parseInt(bombe.style.left) - GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
-      //.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
       vilainList[i].traverser = true;
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
       score++;
-      drawScore();
 
       if (vilainList.length == 0) {
         alert("Gagné ! Score " + score);
@@ -418,13 +416,11 @@ function kill() {
     }
 
     if (parseInt(bombe.style.left) + GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
-      //.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
       vilainList[i].traverser = true;
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
       score++;
-      drawScore();
 
       if (vilainList.length == 0) {
         alert("Gagné ! Score " + score);
@@ -435,13 +431,11 @@ function kill() {
     }
 
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) + GRID_SIZE == vilainList[i].offsetTop) {
-      //console.log(bombe.style.left, bombe.style.top, vilainList[i].offsetLeft, vilainList[i].offsetTop);
       vilainList[i].traverser = true;
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
       score++;
-      drawScore();
 
       if (vilainList.length == 0) {
         alert("Gagné ! Score " + score);
@@ -450,6 +444,8 @@ function kill() {
       }
 
     }
+
+    drawScore();
 
   }
 
