@@ -23,6 +23,12 @@
     height: 640px;
 }
 
+.scoreGame {
+  font-size: 36px;
+  color: white;
+  font-weight: bold;
+}
+
 #plateau{
   margin: auto;
   position: relative;

@@ -9,6 +9,8 @@ const GRID_SIZE = 40;
 const WINDOW_WIDTH = H_GRID * GRID_SIZE;
 const WINDOW_HEIGHT = V_GRID * GRID_SIZE;
 
+var score = 0;
+
 var plateau = document.getElementById('plateau');
 plateau.style.width = WINDOW_WIDTH;
 plateau.style.height = WINDOW_HEIGHT;
@@ -53,6 +55,7 @@ for (var i = 0; i < H_GRID; i++) {
     // Blue screens of death
     else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
+      block.classList.add("bsod");
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
@@ -62,6 +65,7 @@ for (var i = 0; i < H_GRID; i++) {
     // Stallman
     else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
+      block.classList.add("stallman");
       block.style.backgroundSize = 'contain';
       block.style.position = 'absolute';
       block.style.zIndex = '90';
@@ -114,7 +118,7 @@ for (var i = 0; i < 8; i++) {
   vilainList.push(vilain)
 }
 
-
+// Création des vilains - aléatories
 var frame = 0;
 
 function loop() {
@@ -238,7 +242,7 @@ document.onkeydown = function(event) {
 
   }
 
-  // Pion meurt si il va sur vilain
+  // Pion meurt s'il va sur vilain
   for (var i = 0; i < vilainList.length; i++) {
     if (x * GRID_SIZE == vilainList[i].offsetLeft && y * GRID_SIZE == vilainList[i].offsetTop) {
       //console.log(x * GRID_SIZE, y * GRID_SIZE, vilainList[i].offsetLeft, vilainList[i].offsetTop);
@@ -323,8 +327,10 @@ function disparitionBombe() {
     //console.log(V_GRID, H_GRID);
 
     // Haut
-    if (by > 0) {
+    if (by > 1) {
       if (!(blockGrid[bx][by - 1].traverser)) {
+        if (blockGrid[bx][by - 1].classList.contains("bsod")) score += 2;
+        if (blockGrid[bx][by - 1].classList.contains("stallman")) score += 3;
         blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx][by - 1].traverser = true;
       }
@@ -333,14 +339,18 @@ function disparitionBombe() {
     // Bas
     if (by < V_GRID - 1) {
       if (!(blockGrid[bx][by + 1].traverser)) {
+        if (blockGrid[bx][by + 1].classList.contains("bsod")) score += 2;
+        if (blockGrid[bx][by + 1].classList.contains("stallman")) score += 3;
         blockGrid[bx][by + 1].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx][by + 1].traverser = true;
       }
     }
 
     // Gauche
-    if (bx > 0) {
+    if (bx > 1) {
       if (!(blockGrid[bx - 1][by].traverser)) {
+        if (blockGrid[bx - 1][by].classList.contains("bsod")) score += 2;
+        if (blockGrid[bx - 1][by].classList.contains("stallman")) score += 3;
         blockGrid[bx - 1][by].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx - 1][by].traverser = true;
       }
@@ -349,10 +359,15 @@ function disparitionBombe() {
     // Droite
     if (bx < H_GRID - 1) {
       if (!(blockGrid[bx + 1][by].traverser)) {
+        if (blockGrid[bx + 1][by].classList.contains("bsod")) score += 2;
+        if (blockGrid[bx + 1][by].classList.contains("stallman")) score += 3;
         blockGrid[bx + 1][by].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx + 1][by].traverser = true;
       }
     }
+
+    drawScore();
+
   }
 
   document.getElementById("bombe").remove();
@@ -372,8 +387,11 @@ function kill() {
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
+      score++;
+      drawScore();
+
       if (vilainList.length == 0) {
-        alert("Gagné !");
+        alert("Gagné ! Score " + score);
         document.location.reload(true);
         return;
       }
@@ -386,8 +404,11 @@ function kill() {
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
+      score++;
+      drawScore();
+
       if (vilainList.length == 0) {
-        alert("Gagné !");
+        alert("Gagné ! Score " + score);
         document.location.reload(true);
         return;
       }
@@ -400,8 +421,11 @@ function kill() {
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
+      score++;
+      drawScore();
+
       if (vilainList.length == 0) {
-        alert("Gagné !");
+        alert("Gagné ! Score " + score);
         document.location.reload(true);
         return;
       }
@@ -414,8 +438,11 @@ function kill() {
       vilainList[i].remove();
       vilainList.splice(i, 1);
 
+      score++;
+      drawScore();
+
       if (vilainList.length == 0) {
-        alert("Gagné !");
+        alert("Gagné ! Score " + score);
         document.location.reload(true);
         return;
       }
@@ -548,4 +575,10 @@ function startAnimationdroite() {
     }
     //reset the position to show first sprite after the last one
   }, speed);
+}
+
+
+function drawScore() {
+  var logElem = document.querySelector(".scoreGame");
+  logElem.innerHTML = "Score : " + score + "<br/>";
 }
