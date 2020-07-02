@@ -94,6 +94,7 @@ var vilainList = []
 // on crée 8 vilains, c'est à diren 8 x div vilain
 for (var i = 0; i < 8; i++) {
   let vilain = document.createElement('div');
+  vilain.id = String(i);
   let x = 0;
   let y = 0;
   while (!blockGrid[x][y].traverser || (x === 0 && y === 0)) {
@@ -244,6 +245,7 @@ document.onkeydown = function(event) {
 
   }
 
+
   // Pion meurt s'il va sur vilain
   for (var i = 0; i < vilainList.length; i++) {
     if (x * GRID_SIZE == vilainList[i].offsetLeft && y * GRID_SIZE == vilainList[i].offsetTop) {
@@ -376,6 +378,8 @@ function disparitionBombe() {
 function kill() {
 
   // Les vilains sont détruits par la bombe
+  let bugdead = [];
+
   for (var i = 0; i < vilainList.length; i++) {
 
     //console.log(vilainList[i]);
@@ -383,65 +387,61 @@ function kill() {
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) - GRID_SIZE == vilainList[i].offsetTop) {
       vilainList[i].traverser = true;
       vilainList[i].remove();
-      vilainList.splice(i, 1);
+      //vilainList.splice(i, 1);
+      bugdead.push(i);
 
       score++;
-
-      if (vilainList.length == 0) {
-        alert("Gagné ! Score " + score);
-        document.location.reload(true);
-        return;
-      }
 
     }
 
     if (parseInt(bombe.style.left) - GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
       vilainList[i].traverser = true;
       vilainList[i].remove();
-      vilainList.splice(i, 1);
+      //vilainList.splice(i, 1);
+      bugdead.push(i);
 
       score++;
-
-      if (vilainList.length == 0) {
-        alert("Gagné ! Score " + score);
-        document.location.reload(true);
-        return;
-      }
 
     }
 
     if (parseInt(bombe.style.left) + GRID_SIZE == vilainList[i].offsetLeft && parseInt(bombe.style.top) == vilainList[i].offsetTop) {
       vilainList[i].traverser = true;
       vilainList[i].remove();
-      vilainList.splice(i, 1);
+      //vilainList.splice(i, 1);
+      bugdead.push(i);
 
       score++;
 
-      if (vilainList.length == 0) {
-        alert("Gagné ! Score " + score);
-        document.location.reload(true);
-        return;
-      }
-
     }
+
+    //console.log(vilainList+i);
 
     if (parseInt(bombe.style.left) == vilainList[i].offsetLeft && parseInt(bombe.style.top) + GRID_SIZE == vilainList[i].offsetTop) {
       vilainList[i].traverser = true;
       vilainList[i].remove();
-      vilainList.splice(i, 1);
+      //vilainList.splice(i, 1);
+      bugdead.push(i);
 
       score++;
-
-      if (vilainList.length == 0) {
-        alert("Gagné ! Score " + score);
-        document.location.reload(true);
-        return;
-      }
 
     }
 
     drawScore();
 
+  }
+
+  // on met à jour la liste + splice
+  let offseti = 0;
+  for (var i = 0; i < bugdead.length; i++) {
+    vilainList.splice(bugdead[i - offseti], 1);
+    offseti++;
+  }
+
+  // Gagné !!!
+  if (vilainList.length == 0) {
+    alert("Gagné ! Score " + score);
+    document.location.reload(true);
+    return;
   }
 
   // Le pion (joueur) est détruit par la bombe
@@ -505,7 +505,9 @@ function startAnimationbas() {
 
     if (position < widthOfSpriteSheet) {
       position = position + diff;
-    } else {
+    }
+
+    else {
       //increment the position by the width of each sprite each time
       position = widthOfEachSprite;
     }
