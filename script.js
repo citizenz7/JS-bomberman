@@ -296,9 +296,7 @@ function createBomb() {
     bombeList.push(bombe);
     //console.log(bombe.x, bombe.y);
 
-    //setTimeout(disparitionBombe, 1500);
     // la bombe explose après 2 secondes
-    // bombe.explode = 120;
     setTimeout(explosionBombe, 2000);
   }
 }
@@ -324,9 +322,6 @@ function disparitionBombe() {
 
   // Bombe
   for (var i = 0; i < bombeList.length; i++) {
-
-    //console.log(bx, by);
-    //console.log(V_GRID, H_GRID);
 
     // Haut
     if (by > 0) {
