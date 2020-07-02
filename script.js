@@ -310,7 +310,7 @@ function explosionBombe() {
   }
 
   setTimeout(disparitionBombe, 1000);
-  setTimeout(kill, 1000);
+  setTimeout(killEmAll, 1000);
 
 }
 
@@ -375,10 +375,10 @@ function disparitionBombe() {
 }
 
 
-function kill() {
+function killEmAll() {
 
   // Les vilains sont détruits par la bombe
-  let bugdead = [];
+  let bugDead = [];
 
   for (var i = 0; i < vilainList.length; i++) {
 
@@ -388,7 +388,7 @@ function kill() {
       vilainList[i].traverser = true;
       vilainList[i].remove();
       //vilainList.splice(i, 1);
-      bugdead.push(i);
+      bugDead.push(i);
 
       score++;
 
@@ -398,7 +398,7 @@ function kill() {
       vilainList[i].traverser = true;
       vilainList[i].remove();
       //vilainList.splice(i, 1);
-      bugdead.push(i);
+      bugDead.push(i);
 
       score++;
 
@@ -408,7 +408,7 @@ function kill() {
       vilainList[i].traverser = true;
       vilainList[i].remove();
       //vilainList.splice(i, 1);
-      bugdead.push(i);
+      bugDead.push(i);
 
       score++;
 
@@ -420,7 +420,7 @@ function kill() {
       vilainList[i].traverser = true;
       vilainList[i].remove();
       //vilainList.splice(i, 1);
-      bugdead.push(i);
+      bugDead.push(i);
 
       score++;
 
@@ -432,8 +432,8 @@ function kill() {
 
   // on met à jour la liste + splice
   let offseti = 0;
-  for (var i = 0; i < bugdead.length; i++) {
-    vilainList.splice(bugdead[i - offseti], 1);
+  for (var i = 0; i < bugDead.length; i++) {
+    vilainList.splice(bugDead[i - offseti], 1);
     offseti++;
   }
 
