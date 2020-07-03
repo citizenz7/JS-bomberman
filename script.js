@@ -55,7 +55,7 @@ for (var i = 0; i < H_GRID; i++) {
     }
 
     // Blue screens of death
-    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    else if (random100() > 96 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
       block.classList.add("bsod");
       block.style.backgroundSize = 'contain';
@@ -65,7 +65,7 @@ for (var i = 0; i < H_GRID; i++) {
     }
 
     // Stallman
-    else if (random100() > 97 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
+    else if (random100() > 96 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.classList.add("stallman");
       block.style.backgroundSize = 'contain';
@@ -91,7 +91,7 @@ for (var i = 0; i < H_GRID; i++) {
 // tableau des vilains
 var vilainList = []
 
-// on crée 8 vilains, c'est à diren 8 x div vilain
+// on crée 8 vilains (8 x div vilain)
 for (var i = 0; i < 8; i++) {
   let vilain = document.createElement('div');
   vilain.id = String(i);
@@ -439,7 +439,7 @@ function killEmAll() {
 
   // Gagné !!!
   if (vilainList.length == 0) {
-    alert("Gagné ! Score " + score);
+    alert("Gagné ! Score " + score + " - Time: " + pad(parseInt(totalSeconds / 60)) + ":" + pad(totalSeconds % 60));
     document.location.reload(true);
     return;
   }
@@ -482,17 +482,13 @@ function killEmAll() {
 }
 
 
-/* ----- SPRITESHEET ----- */
+/* ----- SPRITESHEET PION ----- */
 var animationInterval;
 var spriteSheet = document.getElementById("pion");
 var widthOfSpriteSheet = 160;
 var widthOfEachSprite = 40;
 var heightOfSpriteSheet = 160;
 var heightOfEachSprite = 40;
-
-function stopAnimation() {
-  clearInterval(animationInterval);
-}
 
 function startAnimationbas() {
   stopAnimation();
@@ -572,8 +568,32 @@ function startAnimationdroite() {
   }, speed);
 }
 
+function stopAnimation() {
+  clearInterval(animationInterval);
+}
 
 function drawScore() {
   var logElem = document.querySelector(".scoreGame");
-  logElem.innerHTML = "Score : " + score + "<br/>";
+  logElem.innerHTML = "Score: " + score + "<br/>";
+}
+
+// Timer
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
 }
