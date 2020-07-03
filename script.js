@@ -121,7 +121,7 @@ for (var i = 0; i < 8; i++) {
   vilainList.push(vilain)
 }
 
-// Création des vilains - aléatories
+// Création des vilains - aléatoires (random)
 var frame = 0;
 
 function loop() {
@@ -447,6 +447,14 @@ function killEmAll() {
   // Le pion (joueur) est détruit par la bombe
   for (var i = 0; i < GRID_SIZE; i++) {
     //console.log(stylePion.left, stylePion.top);
+
+    // Pion meurt si au milieu de la bombe
+    if (parseInt(bombe.style.left) == parseInt(stylePion.left) && parseInt(bombe.style.top) == parseInt(stylePion.top)) {
+      document.getElementById('pion').remove();
+      alert("Perdu ! Recommencer...");
+      document.location.reload(true);
+      break;
+    }
 
     // Top
     if (parseInt(bombe.style.left) == parseInt(stylePion.left) && parseInt(bombe.style.top) - GRID_SIZE == parseInt(stylePion.top)) {
