@@ -41,16 +41,14 @@ for (var i = 0; i < H_GRID; i++) {
     let block = document.createElement("div");
     block.style.width = "40px";
     block.style.height = "40px";
-    block.style.display = "flex";
     block.style.position = "absolute";
+    block.style.backgroundSize = 'contain';
+    block.style.zIndex = '90';
 
     // Murs de briques
     // if + condition pour ne pas faire poper de wallbrick dans les 4 coins de la grille
     if (random100() > 60 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/wallbrick.jpg")';
-      block.style.backgroundSize = 'contain';
-      block.style.position = 'absolute';
-      block.style.zIndex = '90';
       block.traverser = false;
     }
 
@@ -58,9 +56,6 @@ for (var i = 0; i < H_GRID; i++) {
     else if (random100() > 96 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/bsod.png")';
       block.classList.add("bsod");
-      block.style.backgroundSize = 'contain';
-      block.style.position = 'absolute';
-      block.style.zIndex = '90';
       block.traverser = false;
     }
 
@@ -68,9 +63,6 @@ for (var i = 0; i < H_GRID; i++) {
     else if (random100() > 96 && !(i >= 0 && i <= 1 && j >= 0 && j <= 1 || i >= (H_GRID - 2) && i < H_GRID && j >= 0 && j <= 1 || i >= 0 && i <= 1 && j >= (V_GRID - 2) && j < V_GRID || i >= (H_GRID - 2) && i < H_GRID && j >= (V_GRID - 2) && j < V_GRID)) {
       block.style.backgroundImage = 'url("img/stallman.jpg")';
       block.classList.add("stallman");
-      block.style.backgroundSize = 'contain';
-      block.style.position = 'absolute';
-      block.style.zIndex = '90';
       block.traverser = false;
     }
 
@@ -305,7 +297,12 @@ function createBomb() {
 
 
 function explosionBombe() {
+
+  let bx = bombe.x;
+  let by = bombe.y;
+
   if (document.getElementById("bombe")) {
+    // la bombe explose case du milieu
     document.getElementById("bombe").style.backgroundImage = "url('img/explode4.gif')";
   }
 
@@ -330,9 +327,13 @@ function disparitionBombe() {
       if (!(blockGrid[bx][by - 1].traverser)) {
         if (blockGrid[bx][by - 1].classList.contains("bsod")) score += bsodPoint;
         if (blockGrid[bx][by - 1].classList.contains("stallman")) score += stallmanPoint;
-        blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx][by - 1].traverser = true;
       }
+      blockGrid[bx][by - 1].style.backgroundImage = 'url("img/explode4.gif"), url("img/grass2.png")';
+      setTimeout(function(){
+        blockGrid[bx][by - 1].style.backgroundImage = 'url("img/grass2.png")';
+      },500);
+
     }
 
     // Bas
@@ -340,9 +341,12 @@ function disparitionBombe() {
       if (!(blockGrid[bx][by + 1].traverser)) {
         if (blockGrid[bx][by + 1].classList.contains("bsod")) score += 2;
         if (blockGrid[bx][by + 1].classList.contains("stallman")) score += 3;
-        blockGrid[bx][by + 1].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx][by + 1].traverser = true;
       }
+      blockGrid[bx][by + 1].style.backgroundImage = 'url("img/explode4.gif"), url("img/grass2.png")';
+      setTimeout(function(){
+        blockGrid[bx][by + 1].style.backgroundImage = 'url("img/grass2.png")';
+      },500);
     }
 
     // Gauche
@@ -350,9 +354,12 @@ function disparitionBombe() {
       if (!(blockGrid[bx - 1][by].traverser)) {
         if (blockGrid[bx - 1][by].classList.contains("bsod")) score += 2;
         if (blockGrid[bx - 1][by].classList.contains("stallman")) score += 3;
-        blockGrid[bx - 1][by].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx - 1][by].traverser = true;
       }
+      blockGrid[bx - 1][by].style.backgroundImage = 'url("img/explode4.gif"), url("img/grass2.png")';
+      setTimeout(function(){
+        blockGrid[bx - 1][by].style.backgroundImage = 'url("img/grass2.png")';
+      },500);
     }
 
     // Droite
@@ -360,9 +367,12 @@ function disparitionBombe() {
       if (!(blockGrid[bx + 1][by].traverser)) {
         if (blockGrid[bx + 1][by].classList.contains("bsod")) score += 2;
         if (blockGrid[bx + 1][by].classList.contains("stallman")) score += 3;
-        blockGrid[bx + 1][by].style.backgroundImage = 'url("img/grass2.png")';
         blockGrid[bx + 1][by].traverser = true;
       }
+      blockGrid[bx + 1][by].style.backgroundImage = 'url("img/explode4.gif"), url("img/grass2.png")';
+      setTimeout(function(){
+        blockGrid[bx + 1][by].style.backgroundImage = 'url("img/grass2.png")';
+      },500);
     }
 
     drawScore();
